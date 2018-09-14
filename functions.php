@@ -189,7 +189,7 @@ function wctpe2018_display_shortcode($atts) {
 	$show_content = '';
 	$show_content .= '<div class="wctpe2018 posts" id="post-' . esc_attr($id) . '">';
 	if ($website != '') {
-		$show_content .= '<div class="post-field"><span class="post-desc">Name:</span><a href="' . esc_attr($website) . '"' . esc_html($name) . '</a></div>';
+		$show_content .= '<div class="post-field"><span class="post-desc">Name:</span><a href="' . esc_attr($website) . '">' . esc_html($name) . '</a></div>';
 	} else {
 		$show_content .= '<div class="post-field"><span class="post-desc">Name:</span>' . esc_html($name) . '</div>';
 	}
