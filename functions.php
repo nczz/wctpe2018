@@ -197,7 +197,7 @@ function wctpe2018_display_shortcode($atts) {
 		$show_content .= '<div class="post-field"><span class="post-desc">Email:</span>' . esc_html($email) . '</div>';
 	}
 	$show_content .= '<div class="post-field"><span class="post-desc">Title:</span>' . esc_html($title) . '</div>';
-	$show_content .= '<div class="post-field"><span class="post-desc">Content:</span>' . esc_html($content) . '</div>';
+	$show_content .= '<div class="post-field"><span class="post-desc">Content:</span>' . $content . '</div>';
 	$show_content .= '<div class="post-field"><span class="post-desc">Image:</span><img src="' . esc_attr($image_large) . '"/></div>';
 	$show_content .= '</div>';
 	return $show_content;
