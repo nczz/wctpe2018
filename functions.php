@@ -89,8 +89,8 @@ function wctpe2018_form_shortcode($atts) {
 			require_once ABSPATH . "wp-admin" . '/includes/media.php';
 		}
 
-		$accept_mime_type = array('image/png', 'image/jpeg', 'image/gif');
-		if (isset($_FILES['mxp-image']) && in_array($_FILES['mxp-image']['type'], $accept_mime_type) &&
+		//$accept_mime_type = array('image/png', 'image/jpeg', 'image/gif');
+		if (isset($_POST['mxp-image']) && $_POST['mxp-image'] != "" &&
 			isset($_POST['mxp-name']) && $_POST['mxp-name'] != "" &&
 			isset($_POST['mxp-email']) && $_POST['mxp-email'] != "" &&
 			isset($_POST['mxp-title']) && $_POST['mxp-title'] != "" &&
@@ -122,23 +122,46 @@ function wctpe2018_form_shortcode($atts) {
 			add_post_meta($pid, 'wctp2018-author-name', $name);
 			add_post_meta($pid, 'wctp2018-post-title', $posttitle);
 			add_post_meta($pid, 'wctp2018-post-content', $content);
-			$tid = media_handle_sideload($_FILES['mxp-image'], $pid, "test");
-			if (!is_wp_error($tid)) {
-				$src = wp_get_attachment_url($tid);
-				$large_thum = image_downsize($tid, 'large');
-				$large_thum_path = $large_thum[0];
-				add_post_meta($pid, 'wctp2018-post-image-full', $src);
-				add_post_meta($pid, 'wctp2018-post-image-large', $large_thum_path);
-				set_post_thumbnail($pid, $tid);
+			$base64_image_string = $_POST['mxp-image'];
+			$splited = explode(',', substr($base64_image_string, 5), 2);
+			$mime = $splited[0];
+			$data = $splited[1];
+
+			$mime_split_without_base64 = explode(';', $mime, 2);
+			$mime_split = explode('/', $mime_split_without_base64[0], 2);
+			$extension = "";
+			$output_file_with_extension = "";
+			if (count($mime_split) == 2) {
+				$extension = $mime_split[1];
+				if ($extension == 'jpeg') {
+					$extension = 'jpg';
+				}
+				$output_file_with_extension = 'user-upload-' . time() . '.' . $extension;
 			}
-			$update_post = array(
-				'ID' => $pid,
-				'post_content' => '[wctpe2018_display id="' . $pid . '"]',
-			);
-			wp_update_post($update_post);
-			return '<script>location.href="' . get_post_permalink($pid) . '"</script>';
+			if (in_array($extension, array('jpg')) && $output_file_with_extension != "") {
+				$tempName = tempnam(sys_get_temp_dir(), 'mxp-tw');
+				$tempName = realpath($tempName);
+				file_put_contents($tempName, base64_decode($data));
+				$tid = media_handle_sideload(array('name' => $output_file_with_extension, 'type' => 'image/jpeg', 'tmp_name' => $tempName, 'error' => 0, 'size' => strlen($data)), $pid, $name . " / " . $posttitle);
+				if (!is_wp_error($tid)) {
+					$src = wp_get_attachment_url($tid);
+					$large_thum = image_downsize($tid, 'large');
+					$large_thum_path = $large_thum[0];
+					add_post_meta($pid, 'wctp2018-post-image-full', $src);
+					add_post_meta($pid, 'wctp2018-post-image-large', $large_thum_path);
+					set_post_thumbnail($pid, $tid);
+				}
+				$update_post = array(
+					'ID' => $pid,
+					'post_content' => '[wctpe2018_display id="' . $pid . '"]',
+				);
+				wp_update_post($update_post);
+				return '<script>location.href="' . get_post_permalink($pid) . '"</script>';
+			} else {
+				$content .= "<script>alert('發生錯誤，請確認資料是否正確！');</script>";
+			}
 		} else {
-			$content .= "<script>alert('發生錯誤，請確認資料是否正確！');</script>";
+			$content .= "<script>alert('Do not hack me..QQ');</script>";
 		}
 	}
 
@@ -152,13 +175,15 @@ function wctpe2018_form_shortcode($atts) {
 	$content .= '<div class="qa-field"><span class="qa-desc">Website</span><input type="text" id="qa-website" placeholder="Website / 網站" value="" name="mxp-website"/></div>';
 	$content .= '<div class="qa-field"><span class="qa-desc">Title</span><input type="text" id="qa-title" placeholder="Title / 標題" value="" name="mxp-title"/></div>';
 	$content .= '<div class="qa-field"><span class="qa-desc">Content</span><textarea id="qa-content" placeholder="Content / 內文" value="" name="mxp-content"></textarea></div>';
-	$content .= '<div class="qa-field"><span class="qa-desc">Image</span><input type="file" id="qa-image"  value="" name="mxp-image" accept="image/*"/></div>';
+	$content .= '<div class="qa-field"><span class="qa-desc">Image</span><input type="file" id="qa-image" accept="image/*"/></div>';
+	$content .= '<div class="qa-field"><input type="hidden" id="qa-image-proc"  value="" name="mxp-image"/></div>';
 	$content .= '<div class="qa-field "><input type="hidden" value="' . esc_attr($id) . '" name="mxp-postkey"/></div>';
 	$content .= '<div id="img-preview"></div>';
 	$content .= '<button id="submit_btn">Submit</button>';
 	$content .= '</form>';
 	$content .= '</div>';
 	$content .= '<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>';
+	$content .= '<script src="' . get_template_directory_uri() . '/js/load-image.all.min.js"></script>';
 	$content .= '
 	<script>
 	(function($){
@@ -167,12 +192,22 @@ function wctpe2018_form_shortcode($atts) {
 		}
 		$(document).ready(function(){
 			$("#qa-image").change(function(){
-				var FR= new FileReader();
+				/*var FR= new FileReader();
 			    FR.addEventListener("load", function () {
 			    	draw("img-preview",FR.result);
 			  	}, false);
-			  FR.readAsDataURL( this.files[0] );
-			})
+			  	FR.readAsDataURL( this.files[0] );*/
+				input = document.getElementById("qa-image");
+        		var loadingImage = loadImage(
+            	input.files[0],
+            	function(img) {
+            		$("#qa-image-proc").val(img.toDataURL("image/jpeg"));
+            		draw("img-preview",img.toDataURL("image/jpeg"));
+            	}, { maxWidth: 2048, canvas: true, orientation: true });
+            	if (!loadingImage){
+            		alert("Too old to use this browser! Update it please!");
+            	}
+			});
 		});
 	}(jQuery))
 	</script>
