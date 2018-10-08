@@ -156,10 +156,10 @@ function wctpe2018_form_shortcode($atts) {
 					'post_content' => '[wctpe2018_display id="' . $pid . '"]',
 				);
 				wp_update_post($update_post);
-				//return '<script>location.href="' . get_post_permalink($pid) . '"</script>';
-				if (wp_redirect(get_post_permalink($pid))) {
-					exit;
-				}
+				return '<script>alert("Thank you! Now redirect to your post.");setTimeout(function(){location.href="' . get_post_permalink($pid) . '";},500);</script>';
+				// if (wp_redirect(get_post_permalink($pid))) {
+				// 	exit;
+				// }
 			} else {
 				$content .= "<script>alert('發生錯誤，請確認資料是否正確！');</script>";
 			}
@@ -187,6 +187,8 @@ function wctpe2018_form_shortcode($atts) {
 	$content .= '</div>';
 	$content .= '<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>';
 	$content .= '<script src="' . get_template_directory_uri() . '/js/load-image.all.min.js"></script>';
+	$content .= '<script src="' . get_template_directory_uri() . '/js/waitMe.min.js"></script>';
+	$content .= '<link rel="stylesheet" href="' . get_template_directory_uri() . '/css/waitMe.min.css"></link>';
 	$content .= '
 	<script>
 	(function($){
@@ -194,6 +196,12 @@ function wctpe2018_form_shortcode($atts) {
 			$("#"+id).html(\'<img src=\'+imgsrc+\' id="img-preview" height="200" alt="Image preview...">\');
 		}
 		$(document).ready(function(){
+			$("#submit_btn").click(function(){
+				$("body").waitMe({
+            		effect: "bounce",
+            		text: "Uploading...",
+        		});
+			});
 			$("#qa-image").change(function(){
 				/*var FR= new FileReader();
 			    FR.addEventListener("load", function () {
