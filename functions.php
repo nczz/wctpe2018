@@ -214,7 +214,7 @@ function wctpe2018_form_shortcode($atts) {
             	function(img) {
             		$("#qa-image-proc").val(img.toDataURL("image/jpeg"));
             		draw("img-preview",img.toDataURL("image/jpeg"));
-            	}, { maxWidth: 2048, canvas: true, orientation: true });
+            	}, { maxWidth: 1024, canvas: true, orientation: true });
             	if (!loadingImage){
             		alert("Too old to use this browser! Update it please!");
             	}
