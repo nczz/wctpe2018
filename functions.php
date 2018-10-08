@@ -156,7 +156,10 @@ function wctpe2018_form_shortcode($atts) {
 					'post_content' => '[wctpe2018_display id="' . $pid . '"]',
 				);
 				wp_update_post($update_post);
-				return '<script>location.href="' . get_post_permalink($pid) . '"</script>';
+				//return '<script>location.href="' . get_post_permalink($pid) . '"</script>';
+				if (wp_redirect(get_post_permalink($pid))) {
+					exit;
+				}
 			} else {
 				$content .= "<script>alert('發生錯誤，請確認資料是否正確！');</script>";
 			}
