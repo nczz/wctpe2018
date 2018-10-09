@@ -157,14 +157,11 @@ function wctpe2018_form_shortcode($atts) {
 				);
 				wp_update_post($update_post);
 				return '<script>alert("Thank you! Now redirect to your post.");setTimeout(function(){location.href="' . get_post_permalink($pid) . '";},500);</script>';
-				// if (wp_redirect(get_post_permalink($pid))) {
-				// 	exit;
-				// }
 			} else {
-				$content .= "<script>alert('發生錯誤，請確認資料是否正確！');</script>";
+				$content .= "<script>alert('Do not hack me..QQ');</script>";
 			}
 		} else {
-			$content .= "<script>alert('Do not hack me..QQ');</script>";
+			$content .= "<script>alert('發生錯誤，請確認資料是否正確！');</script>";
 		}
 	}
 
@@ -173,12 +170,12 @@ function wctpe2018_form_shortcode($atts) {
 		$content .= '<' . esc_attr($title_tag) . '>' . esc_html($title) . '</' . esc_attr($title_tag) . '>';
 	}
 	$content .= '<form method="POST" action="" enctype="multipart/form-data">';
-	$content .= '<div class="qa-field"><span class="qa-desc">Name</span><input type="text" id="qa-name" placeholder="Name / 稱呼" value="" name="mxp-name"/></div>';
-	$content .= '<div class="qa-field"><span class="qa-desc">Email</span><input type="text" id="qa-email" placeholder="Email / 信箱" value="" name="mxp-email"/></div>';
-	$content .= '<div class="qa-field"><span class="qa-desc">Website</span><input type="text" id="qa-website" placeholder="Website / 網站" value="" name="mxp-website"/></div>';
-	$content .= '<div class="qa-field"><span class="qa-desc">Title</span><input type="text" id="qa-title" placeholder="Title / 標題" value="" name="mxp-title"/></div>';
-	$content .= '<div class="qa-field"><span class="qa-desc">Content</span><textarea id="qa-content" placeholder="Content / 內文" value="" name="mxp-content"></textarea></div>';
-	$content .= '<div class="qa-field"><span class="qa-desc">Image</span><input type="file" id="qa-image" accept="image/*"/></div>';
+	$content .= '<div class="qa-field"><span class="qa-desc">Name*</span><input type="text" id="qa-name" placeholder="Name / 稱呼" value="" name="mxp-name"/></div>';
+	$content .= '<div class="qa-field"><span class="qa-desc">Email*</span><input type="text" id="qa-email" placeholder="Email / 信箱" value="" name="mxp-email"/></div>';
+	$content .= '<div class="qa-field"><span class="qa-desc">Website</span><input type="text" id="qa-website" placeholder="Website / 網站 http(s)://..." value="" name="mxp-website"/></div>';
+	$content .= '<div class="qa-field"><span class="qa-desc">Title*</span><input type="text" id="qa-title" placeholder="Title / 標題" value="" name="mxp-title"/></div>';
+	$content .= '<div class="qa-field"><span class="qa-desc">Message*</span><textarea id="qa-content" placeholder="Message / 內文" value="" name="mxp-content"></textarea></div>';
+	$content .= '<div class="qa-field"><span class="qa-desc">Image*</span><input type="file" id="qa-image" accept="image/*"/></div>';
 	$content .= '<div class="qa-field"><input type="hidden" id="qa-image-proc"  value="" name="mxp-image"/></div>';
 	$content .= '<div class="qa-field "><input type="hidden" value="' . esc_attr($id) . '" name="mxp-postkey"/></div>';
 	$content .= '<div id="img-preview"></div>';
@@ -254,7 +251,7 @@ function wctpe2018_display_shortcode($atts) {
 		$show_content .= '<div class="post-field"><span class="post-desc">Email:</span>' . esc_html($email) . '</div>';
 	}
 	$show_content .= '<div class="post-field"><span class="post-desc">Title:</span>' . esc_html($title) . '</div>';
-	$show_content .= '<div class="post-field"><span class="post-desc">Content:</span>' . $content . '</div>';
+	$show_content .= '<div class="post-field"><span class="post-desc">Message:</span>' . $content . '</div>';
 	$show_content .= '<div class="post-field"><img src="' . esc_attr($image_large) . '"/></div>';
 	$show_content .= '</div>';
 	return $show_content;
