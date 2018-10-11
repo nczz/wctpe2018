@@ -174,7 +174,7 @@ function wctpe2018_form_shortcode($atts) {
 	$content .= '<div class="qa-field"><span class="qa-desc">Name*</span><input type="text" id="qa-name" placeholder="Name / 稱呼" value="" name="mxp-name"/></div>';
 	$content .= '<div class="qa-field"><span class="qa-desc">Email*</span><input type="text" id="qa-email" placeholder="Email / 信箱" value="" name="mxp-email"/></div>';
 	$content .= '<div class="qa-field"><span class="qa-desc">Website</span><input type="text" id="qa-website" placeholder="Website / 網站 http(s)://..." value="" name="mxp-website"/></div>';
-	$content .= '<div class="qa-field"><span class="qa-desc">Title*</span><input type="text" id="qa-title" placeholder="Title / 標題" value="" name="mxp-title"/></div>';
+	$content .= '<div class="qa-field"><span class="qa-desc">Title*</span><input type="text" id="qa-title" placeholder="Who are you? What are you looking for?/ 你是誰？想找什麼呢？" value="" name="mxp-title"/></div>';
 	$content .= '<div class="qa-field"><span class="qa-desc">Message*</span><textarea id="qa-content" placeholder="Message / 內文" value="" name="mxp-content"></textarea></div>';
 	$content .= '<div class="qa-field"><span class="qa-desc">Image*</span><input type="file" id="qa-image" accept="image/*"/></div>';
 	$content .= '<div class="qa-field"><input type="hidden" id="qa-image-proc"  value="" name="mxp-image"/></div>';
@@ -220,6 +220,7 @@ function wctpe2018_display_shortcode($atts) {
 	$show_content .= '<div class="post-field"><span class="post-desc">Message:</span>' . $content . '</div>';
 	$show_content .= '<div class="post-field"><img src="' . esc_attr($image_large) . '"/></div>';
 	$show_content .= '</div>';
+	$show_content .= '<div class="fb-share-button" data-href="' . get_permalink($id) . '" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">分享</a></div><style>div.fb-share-button{display:none;}</style>';
 	return $show_content;
 }
 
