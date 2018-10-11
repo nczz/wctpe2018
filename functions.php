@@ -265,6 +265,17 @@ function wctpe2018_display_shortcode($atts) {
             href: location.href,
         }, function(response) { /*console.log(response);*/ });
     });
+    jQuery('#TwitterShare').click(function(){
+      var shareURL = 'http://twitter.com/share?';
+      var params = {
+        url: '" . get_permalink($id) . "',
+        text: 'Hey! I am here in WordCamp Taipei 2018 now!',
+        via: 'WordCampTaipei',
+        hashtags: 'WCTPE,WordCampTaipei2018'
+      }
+      for(var prop in params) shareURL += '&' + prop + '=' + encodeURIComponent(params[prop]);
+      window.open(shareURL, '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
+    	});
 });
 	</script>";
 	return $show_content;
@@ -274,8 +285,7 @@ add_shortcode('wctpe2018_display', 'wctpe2018_display_shortcode');
 
 function insert_social_tags_in_head() {
 	global $post;
-	if (!is_single()) //if it is not a post or a page
-	{
+	if (!is_single()) {
 		return;
 	}
 	$datetime = get_post_meta($post->ID, 'wctp2018-post-datetime', true);
@@ -322,7 +332,7 @@ function insert_social_tags_in_head() {
      var js, fjs = d.getElementsByTagName(s)[0];
      if (d.getElementById(id)) {return;}
      js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/zh_TW/sdk.js";
+     js.src = "//connect.facebook.net/en_US/sdk.js";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 </script>
