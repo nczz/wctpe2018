@@ -170,7 +170,7 @@ function wctpe2018_form_shortcode($atts) {
 	if ($title !== '') {
 		$content .= '<' . esc_attr($title_tag) . '>' . esc_html($title) . '</' . esc_attr($title_tag) . '>';
 	}
-	$content .= '<form method="POST" action="" enctype="multipart/form-data" id="wctpe2018_form">';
+	$content .= '<form method="POST" action="" id="wctpe2018_form">';
 	$content .= '<div class="qa-field"><span class="qa-desc">Name*</span><input type="text" id="qa-name" placeholder="Name / 稱呼" value="" name="mxp-name"/></div>';
 	$content .= '<div class="qa-field"><span class="qa-desc">Email*</span><input type="text" id="qa-email" placeholder="Email / 信箱" value="" name="mxp-email"/></div>';
 	$content .= '<div class="qa-field"><span class="qa-desc">Website</span><input type="text" id="qa-website" placeholder="Website / 網站 http(s)://..." value="" name="mxp-website"/></div>';
