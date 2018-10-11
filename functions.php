@@ -180,8 +180,8 @@ function wctpe2018_form_shortcode($atts) {
 	$content .= '<div class="qa-field"><input type="hidden" id="qa-image-proc"  value="" name="mxp-image"/></div>';
 	$content .= '<div class="qa-field "><input type="hidden" value="' . esc_attr($id) . '" name="mxp-postkey"/></div>';
 	$content .= '<div id="img-preview"></div>';
-	$content .= '</form>';
 	$content .= '<button id="submit_btn">Submit</button>';
+	$content .= '</form>';
 	$content .= '</div>';
 	return $content;
 }
