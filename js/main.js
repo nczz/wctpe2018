@@ -9,8 +9,8 @@
                 effect: "bounce",
                 text: "Uploading...(If you are using iOS 12 that you may stuck here. Refresh after 20s and do not resend again. Thank you. / 如果你使用 iOS 12 操作此功能而停在這個畫面，請於20秒左右重新整理並不要重新傳送表單，謝謝。)",
             });
-            $('#submit_btn').attr('target', 'wctpe_ios12_bug_fixed');
-            $('#submit_btn').attr('action', location.href);
+            $('#wctpe2018_form').attr('target', 'wctpe_ios12_bug_fixed');
+            $('#wctpe2018_form').attr('action', location.href);
             var iframe = document.createElement('iframe');
             iframe.setAttribute('src', '');
             iframe.setAttribute('id', 'wctpe_ios12_bug_fixed');

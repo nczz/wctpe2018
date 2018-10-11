@@ -157,7 +157,7 @@ function wctpe2018_form_shortcode($atts) {
 					'post_content' => '[wctpe2018_display id="' . $pid . '"]',
 				);
 				wp_update_post($update_post);
-				return '<script>alert("Thank you! Now redirect to your post.");setTimeout(function(){location.href="' . get_post_permalink($pid) . '";},500);</script>';
+				return '<script>alert("Thank you! Now redirect to your post.");setTimeout(function(){window.top.location.href="' . get_post_permalink($pid) . '";location.href="' . get_post_permalink($pid) . '";},500);</script>';
 			} else {
 				$content .= "<script>alert('Do not hack me..QQ');</script>";
 			}
