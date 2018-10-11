@@ -1,7 +1,9 @@
 body{
   background-color: #fdf7db;
 }
-
+.m_b_20{
+  margin-bottom:20px;
+}
 
 /* header */
 .site-header{
@@ -33,6 +35,8 @@ padding: 20px;
 }
 .nav-menu li{
       list-style-type: none;
+      display: inline-block;
+      margin-right: 10px;
 }
 .nav-menu li a{
          color: #259db4;
@@ -73,6 +77,10 @@ width:100%;
 vertical-align: top;
 }
 
+.post h2 a{
+color:#2ba7bc;
+}
+
 #submit_btn{
   margin-top:15px;
   width:100%;
@@ -103,7 +111,33 @@ vertical-align: top;
   color: #fff;
          max-width: 250px;
 }
-
+.post_img img {
+  width: 100%;
+  max-width: 100%;
+}
+.post_img  {
+ height: 300px;
+ overflow: hidden;
+}
+.f_btn{
+  display: block;
+  position: fixed;
+  bottom:0px;
+  text-align: center;
+      width: 100%;
+      left: 0px;
+      padding: 20px;
+      background: #31b0c4;
+      color: #fff;
+      font-size: 1.2em;
+      text-decoration: none;
+      transition: all 0.5s;
+}
+.f_btn:hover{
+  opacity: 0.8;
+      text-decoration: none;
+       color: #fff;
+}
 /* 首頁end */
 
 /* single */
@@ -129,14 +163,19 @@ max-width: 100%;
 
 /* footer */
 
+
 .footer{
   padding:20px 15px;
   background-color: #35a8bb;
   margin-top:40px;
   color:#fff;
   font-size: 16px;
+  margin-bottom:60px;
 }
 
 
 
 
+.page .footer {
+  margin-bottom: 0px;
+}

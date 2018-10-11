@@ -12,6 +12,7 @@ if (have_posts()) {
 	} // end while
 } // end if
 ?>
+<a class="f_btn" href="/submit">我也想投稿</a>
 </div>
 <?php
 get_footer();

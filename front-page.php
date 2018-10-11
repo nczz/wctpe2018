@@ -1,4 +1,7 @@
 <?php get_header();?>
+
+<div class="container">
+
 <?php if (have_posts()): ?>
 
 <!-- Add the pagination functions here. -->
@@ -10,11 +13,21 @@
 	// $website = get_post_meta(get_the_ID(), 'wctpe2018-author-website', true);
 	$name = get_post_meta(get_the_ID(), 'wctp2018-author-name', true);
 	$title = get_post_meta(get_the_ID(), 'wctp2018-post-title', true);
-	// $content = get_post_meta(get_the_ID(), 'wctp2018-post-content', true);
+	$content = get_post_meta(get_the_ID(), 'wctp2018-post-content', true);
 	// $image_full = get_post_meta(get_the_ID(), 'wctp2018-post-image-full', true);
 	$image_large = get_post_meta(get_the_ID(), 'wctp2018-post-image-large', true);
 
-	echo $name . ":" . $title . '<img src="' . $image_large . '"/>'; //小豬～ 樣式組裝的架構在這邊！
+	echo 
+	'<div class="row m_b_20 post">
+	<div class="col-md-4 post_img"><img src="' . $image_large . '"/></div>
+	<div class="col-md-8">
+	<h2 class="name"><a href="'. get_permalink( $post->ID ).'">'.$name . ":" . $title .'</a></h2>
+	<p class="content">'.$content.'</p>
+	
+	</div>
+	</div>
+	
+	 '; //小豬～ 樣式組裝的架構在這邊！
 endwhile
 ?>
 <!-- End of the main loop -->
@@ -27,4 +40,7 @@ endwhile
 <?php else: ?>
 <p><?php echo 'Sorry, no posts here.'; ?></p>
 <?php endif;?>
+<a class="f_btn" href="/submit">我也想投稿</a>
+</div>
+</div>
 <?php get_footer();?>
