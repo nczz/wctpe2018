@@ -340,3 +340,19 @@ function insert_social_tags_in_head() {
 
 }
 add_action('wp_head', 'insert_social_tags_in_head', 5);
+
+function insert_GA_in_head() {
+	if (!is_user_logged_in()):
+	?>
+<script>
+(function(i, s, o, g, r, a, m) {
+i['GoogleAnalyticsObject'] = r;i[r] = i[r] || function() {
+(i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date();a = s.createElement(o), m = s.getElementsByTagName(o)[0];a.async = 1;a.src = g;m.parentNode.insertBefore(a, m)})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-127396041-1', 'auto');
+ga('require', 'displayfeatures');
+ga('send', 'pageview');
+</script>
+	<?php
+endif;
+}
+add_action('wp_head', 'insert_GA_in_head', 6);
