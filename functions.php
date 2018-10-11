@@ -244,7 +244,7 @@ function wctpe2018_display_shortcode($atts) {
 	$show_content .= '<div class="wctpe2018 posts" id="post-' . esc_attr($id) . '">';
 	if ($website != '') {
 		if (substr($website, 0, 4) != "http") {
-			$website .= "http://" . $website;
+			$website = "http://" . $website;
 		}
 		$show_content .= '<div class="post-field"><span class="post-desc">Name:</span><a href="' . esc_attr($website) . '">' . esc_html($name) . '</a></div>';
 	} else {
