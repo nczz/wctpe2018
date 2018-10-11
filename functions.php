@@ -220,7 +220,6 @@ function wctpe2018_display_shortcode($atts) {
 	$show_content .= '<div class="post-field"><span class="post-desc">Message:</span>' . $content . '</div>';
 	$show_content .= '<div class="post-field"><img src="' . esc_attr($image_large) . '"/></div>';
 	$show_content .= '</div>';
-	$show_content .= '<div class="fb-share-button" data-href="' . get_permalink($id) . '" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">分享</a></div><style>div.fb-share-button{display:none;}</style>';
 	return $show_content;
 }
 
