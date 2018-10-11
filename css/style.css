@@ -116,16 +116,23 @@ color:#2ba7bc;
   max-width: 100%;
 }
 .post_img  {
- height: 300px;
+ height: 200px;
  overflow: hidden;
 }
+.post .name a{
+ text-align: center;
+    font-size: 18px;
+    display: block;
+}
+
+
 .f_btn{
   display: block;
   position: fixed;
   bottom:0px;
   text-align: center;
-      width: 100%;
-      left: 0px;
+     width: 100%;
+      right: 0px;
       padding: 20px;
       background: #31b0c4;
       color: #fff;
@@ -137,6 +144,9 @@ color:#2ba7bc;
   opacity: 0.8;
       text-decoration: none;
        color: #fff;
+}
+.home_content{
+  min-height: 900px;
 }
 /* 首頁end */
 
@@ -170,7 +180,7 @@ max-width: 100%;
   margin-top:40px;
   color:#fff;
   font-size: 16px;
-  margin-bottom:60px;
+  margin-bottom:60px; 
 }
 
 

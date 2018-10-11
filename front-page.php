@@ -1,11 +1,11 @@
 <?php get_header();?>
 
-<div class="container">
+<div class="container home_content">
 
 <?php if (have_posts()): ?>
 
 <!-- Add the pagination functions here. -->
-
+<div class="row">
 <!-- Start of the main loop. -->
 <?php while (have_posts()): the_post();
 	// $datetime = get_post_meta(get_the_ID(), 'wctp2018-post-datetime', true);
@@ -18,13 +18,13 @@
 	$image_large = get_post_meta(get_the_ID(), 'wctp2018-post-image-large', true);
 
 	echo 
-	'<div class="row m_b_20 post">
-	<div class="col-md-4 post_img"><img src="' . $image_large . '"/></div>
-	<div class="col-md-8">
+	'<div class="col-md-3 m_b_20 post">
+	<div class=" post_img"><a href="'. get_permalink( $post->ID ).'"><img src="' . $image_large . '"/></a></div>
+
 	<h2 class="name"><a href="'. get_permalink( $post->ID ).'">'.$name . ":" . $title .'</a></h2>
-	<p class="content">'.$content.'</p>
 	
-	</div>
+	
+
 	</div>
 	
 	 '; //小豬～ 樣式組裝的架構在這邊！
@@ -36,7 +36,7 @@ endwhile
 
 <div class="nav-previous alignleft"><?php previous_posts_link('Older posts / 後一頁');?></div>
 <div class="nav-next alignright"><?php next_posts_link('Newer posts / 前一頁');?></div>
-
+</div>
 <?php else: ?>
 <p><?php echo 'Sorry, no posts here.'; ?></p>
 <?php endif;?>
