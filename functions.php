@@ -240,7 +240,7 @@ function wctpe2018_display_shortcode($atts) {
 	$image_full = get_post_meta($id, 'wctp2018-post-image-full', true);
 	$image_large = get_post_meta($id, 'wctp2018-post-image-large', true);
 
-	$show_content = '';
+	$show_content = '<div><span id="FBShare">Share to Facebook</span>|<span id="TwitterShare">Share to Twitter</span></div>';
 	$show_content .= '<div class="wctpe2018 posts" id="post-' . esc_attr($id) . '">';
 	if ($website != '') {
 		$show_content .= '<div class="post-field"><span class="post-desc">Name:</span><a href="' . esc_attr($website) . '">' . esc_html($name) . '</a></div>';
@@ -254,6 +254,19 @@ function wctpe2018_display_shortcode($atts) {
 	$show_content .= '<div class="post-field"><span class="post-desc">Message:</span>' . $content . '</div>';
 	$show_content .= '<div class="post-field"><img src="' . esc_attr($image_large) . '"/></div>';
 	$show_content .= '</div>';
+	$show_content .= "<script>
+	jQuery(document).ready(function() {
+    jQuery('#FBShare').click(function() {
+        FB.ui({
+            method: 'share',
+            hashtag: '#WordCampTaipei2018',
+            quote: '" . esc_attr($name) . " : " . esc_attr($content) . "',
+            display: 'popup',
+            href: location.href,
+        }, function(response) { /*console.log(response);*/ });
+    });
+});
+	</script>";
 	return $show_content;
 }
 
