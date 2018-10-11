@@ -102,6 +102,11 @@ function wctpe2018_form_shortcode($atts) {
 			$email = filter_var($email, FILTER_VALIDATE_EMAIL) ? $email : "nobody";
 			$posttitle = strip_tags($_POST['mxp-title']);
 			$content = nl2br(strip_tags($_POST['mxp-content']));
+			setcookie('user_name', $name, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+			setcookie('user_email', $email, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+			setcookie('user_website', $website, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+			setcookie('user_posttitle', $posttitle, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+
 			//建立一篇文章
 			$now = time();
 			$pid = wp_insert_post(array(
@@ -165,16 +170,21 @@ function wctpe2018_form_shortcode($atts) {
 			$content .= "<script>alert('發生錯誤，請確認資料是否正確！');</script>";
 		}
 	}
+	$user_name = isset($_COOKIE['user_name']) ? $_COOKIE['user_name'] : "";
+	$user_website = isset($_COOKIE['user_website']) ? $_COOKIE['user_website'] : "";
+	$user_posttitle = isset($_COOKIE['user_posttitle']) ? $_COOKIE['user_posttitle'] : "";
+	$user_email = isset($_COOKIE['user_email']) ? $_COOKIE['user_email'] : "";
+
 	$content .= "<p>WordCamp Taipei 2018 帶給你什麼感覺呢？</p><p>想拿隱藏版 WAPUU 貼紙或是徵才或是與我們保持聯繫嗎？</p><p>大方的在下方表單留下你的大會活動的回憶吧！</p>";
 	$content .= '<div class="' . esc_attr($class) . '" id="chun-' . esc_attr($id) . '">';
 	if ($title !== '') {
 		$content .= '<' . esc_attr($title_tag) . '>' . esc_html($title) . '</' . esc_attr($title_tag) . '>';
 	}
 	$content .= '<form method="POST" action="" id="wctpe2018_form">';
-	$content .= '<div class="qa-field"><span class="qa-desc">Name*</span><input type="text" id="qa-name" placeholder="Name / 稱呼" value="" name="mxp-name"/></div>';
-	$content .= '<div class="qa-field"><span class="qa-desc">Email*</span><input type="text" id="qa-email" placeholder="Email / 信箱" value="" name="mxp-email"/></div>';
-	$content .= '<div class="qa-field"><span class="qa-desc">Website</span><input type="text" id="qa-website" placeholder="Website / 網站 http(s)://..." value="" name="mxp-website"/></div>';
-	$content .= '<div class="qa-field"><span class="qa-desc">Title*</span><input type="text" id="qa-title" placeholder="Who are you? What are you looking for?/ 你是誰？想找什麼呢？" value="" name="mxp-title"/></div>';
+	$content .= '<div class="qa-field"><span class="qa-desc">Name*</span><input type="text" id="qa-name" placeholder="Name / 稱呼" value="' . $user_name . '" name="mxp-name"/></div>';
+	$content .= '<div class="qa-field"><span class="qa-desc">Email*</span><input type="text" id="qa-email" placeholder="Email / 信箱" value="' . $user_email . '" name="mxp-email"/></div>';
+	$content .= '<div class="qa-field"><span class="qa-desc">Website</span><input type="text" id="qa-website" placeholder="Website / 網站 http(s)://..." value="' . $user_website . '" name="mxp-website"/></div>';
+	$content .= '<div class="qa-field"><span class="qa-desc">Title*</span><input type="text" id="qa-title" placeholder="Who are you? What are you looking for?/ 你是誰？想找什麼呢？" value="' . $user_posttitle . '" name="mxp-title"/></div>';
 	$content .= '<div class="qa-field"><span class="qa-desc">Message*</span><textarea id="qa-content" placeholder="Message / 內文" value="" name="mxp-content"></textarea></div>';
 	$content .= '<div class="qa-field"><span class="qa-desc">Image*</span><input type="file" id="qa-image" accept="image/*"/></div>';
 	$content .= '<div class="qa-field"><input type="hidden" id="qa-image-proc"  value="" name="mxp-image"/></div>';
