@@ -25,7 +25,7 @@ function optimize_theme_setup() {
 	//移除css, js資源載入時的版本資訊
 	function remove_version_query($src) {
 		if (strpos($src, 'ver=')) {
-			$src = remove_query_arg('ver', $src);
+			$src .= "?t=" . time(); // remove_query_arg('ver', $src);
 		}
 		return $src;
 	}
@@ -78,7 +78,7 @@ function wctpe2018_form_shortcode($atts) {
 	extract(shortcode_atts(array(
 		'id' => 'wctpe2018_form',
 		'class' => 'wctpe2018_form',
-		'title' => '與我們分享你的感覺吧！',
+		'title' => 'WordCamp Taipei 2018 帶給你什麼感覺呢？想拿隱藏版 WAPUU 或是徵才或是與我們保持聯繫嗎？更歡迎你透過這個活動網站幫我們留下大會活動的回憶。',
 		'title_tag' => 'h3',
 	), $atts));
 	$content = "";
