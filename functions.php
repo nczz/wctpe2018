@@ -1,12 +1,13 @@
 <?php
 function custom_enqueue_styles() {
-
 	wp_enqueue_script('jquery');
-	// wp_enqueue_script('tether', 'https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js');
-	wp_enqueue_script('bootstrap-scripts', get_stylesheet_directory_uri() . '/js/bootstrap.min.js');
-	wp_enqueue_script('main', get_stylesheet_directory_uri() . '/js/main.js');
-	wp_enqueue_style('bootstrap', get_stylesheet_directory_uri() . '/css/bootstrap.min.css');
-	wp_enqueue_style('custom_css', get_stylesheet_directory_uri() . '/css/style.css');
+	wp_enqueue_script('bootstrap-scripts', get_template_directory_uri() . '/js/bootstrap.min.js');
+	wp_enqueue_script('load-image', get_template_directory_uri() . '/js/load-image.all.min.js');
+	wp_enqueue_script('waitMe_js', get_template_directory_uri() . '/js/waitMe.min.js');
+	wp_enqueue_style('waitMe_css', get_template_directory_uri() . '/css/waitMe.min.css');
+	wp_enqueue_script('main', get_template_directory_uri() . '/js/main.js');
+	wp_enqueue_style('bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css');
+	wp_enqueue_style('custom_css', get_template_directory_uri() . '/css/style.css');
 }
 add_action('wp_enqueue_scripts', 'custom_enqueue_styles');
 
@@ -182,44 +183,6 @@ function wctpe2018_form_shortcode($atts) {
 	$content .= '<button id="submit_btn">Submit</button>';
 	$content .= '</form>';
 	$content .= '</div>';
-	$content .= '<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>';
-	$content .= '<script src="' . get_template_directory_uri() . '/js/load-image.all.min.js"></script>';
-	$content .= '<script src="' . get_template_directory_uri() . '/js/waitMe.min.js"></script>';
-	$content .= '<link rel="stylesheet" href="' . get_template_directory_uri() . '/css/waitMe.min.css"></link>';
-	$content .= '
-	<script>
-	(function($){
-		function draw(id,imgsrc) {
-			$("#"+id).html(\'<img src=\'+imgsrc+\' id="img-preview" height="200" alt="Image preview...">\');
-		}
-		$(document).ready(function(){
-			$("#submit_btn").click(function(){
-				$("body").waitMe({
-            		effect: "bounce",
-            		text: "Uploading...(If you are using iOS 12 that you may stuck here. Refresh after 20s. Thank you.)",
-        		});
-			});
-			$("#qa-image").change(function(){
-				/*var FR= new FileReader();
-			    FR.addEventListener("load", function () {
-			    	draw("img-preview",FR.result);
-			  	}, false);
-			  	FR.readAsDataURL( this.files[0] );*/
-				input = document.getElementById("qa-image");
-        		var loadingImage = loadImage(
-            	input.files[0],
-            	function(img) {
-            		$("#qa-image-proc").val(img.toDataURL("image/jpeg"));
-            		draw("img-preview",img.toDataURL("image/jpeg"));
-            	}, { maxWidth: 1024, canvas: true, orientation: true });
-            	if (!loadingImage){
-            		alert("Too old to use this browser! Update it please!");
-            	}
-			});
-		});
-	}(jQuery))
-	</script>
-	';
 	return $content;
 }
 add_shortcode('wctpe2018_form', 'wctpe2018_form_shortcode');
