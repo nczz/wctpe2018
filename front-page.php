@@ -19,9 +19,12 @@
 
 	echo 
 	'<div class="col-md-3 m_b_20 post">
+	<div class="box">
 	<div class=" post_img"><a href="'. get_permalink( $post->ID ).'"><img src="' . $image_large . '"/></a></div>
 
-	<h2 class="name"><a href="'. get_permalink( $post->ID ).'">'.$name . ":" . $title .'</a></h2>
+	<a href="'. get_permalink( $post->ID ).'" class="name"><h2 >'.$name . ":" . $title .'</h2></a>
+	</div>
+	
 	
 	
 
