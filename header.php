@@ -4,7 +4,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <?php wp_head();?>
 </head>
-<body <?php body_class(); ?>>
+<body <?php body_class();?>>
+	<div id="fb-root"></div>
 	<header id="masthead" class="site-header" role="banner">
 		<div class="header-main ">
 			<h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home"><?php bloginfo('name');?></a></h1>

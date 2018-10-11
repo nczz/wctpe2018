@@ -271,3 +271,62 @@ function wctpe2018_display_shortcode($atts) {
 }
 
 add_shortcode('wctpe2018_display', 'wctpe2018_display_shortcode');
+
+function insert_social_tags_in_head() {
+	global $post;
+	if (!is_single()) //if it is not a post or a page
+	{
+		return;
+	}
+	$datetime = get_post_meta($post->ID, 'wctp2018-post-datetime', true);
+	$email = get_post_meta($post->ID, 'wctp2018-author-email', true);
+	$website = get_post_meta($post->ID, 'wctpe2018-author-website', true);
+	$name = get_post_meta($post->ID, 'wctp2018-author-name', true);
+	$title = get_post_meta($post->ID, 'wctp2018-post-title', true);
+	$content = get_post_meta($post->ID, 'wctp2018-post-content', true);
+	$image_full = get_post_meta($post->ID, 'wctp2018-post-image-full', true);
+	$image_large = get_post_meta($post->ID, 'wctp2018-post-image-large', true);
+	$thumbnail_src = get_template_directory_uri() . '/img/wapuu-267x300.png';
+	if (has_post_thumbnail($post->ID)) {
+		$thumbnail_src = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'large');
+		$thumbnail_src = $thumbnail_src[0];
+	}
+	?>
+<meta property="og:title" content="<?php echo "{$name} : {$title}"; ?>" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="<?php echo get_permalink($post->ID); ?>" />
+<meta property="og:image" content="<?php echo esc_attr($thumbnail_src); ?>" />
+<meta property="og:site_name" content="<?php echo get_bloginfo('name'); ?>" />
+<meta property="og:description" content="<?php echo $content; ?>" />
+<meta property="article:tag" content="WCTPE2018" />
+<meta property="article:tag" content="WordCamp Taipei 2018" />
+<meta property="article:publisher" content="https://www.facebook.com/WordCamp.Taipei/" />
+<meta property="article:published_time" content="<?php echo date('c', $datetime); ?>" />
+<meta property="article:modified_time" content="<?php echo date('c', $datetime); ?>" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@WordCampTaipei" />
+<meta name="twitter:domain" content="<?php echo get_bloginfo('url'); ?>" />
+<meta name="twitter:title" content="<?php echo "{$name} : {$title}"; ?>" />
+<meta name="twitter:description" content="<?php echo $content; ?>" />
+<meta name="twitter:image" content="<?php echo esc_attr($thumbnail_src); ?>" />
+<meta itemprop="image" content="<?php echo esc_attr($thumbnail_src); ?>" />
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '507436489771545',
+      xfbml      : true,
+      version    : 'v3.1'
+    });
+  };
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/zh_TW/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+	<?php
+
+}
+add_action('wp_head', 'insert_social_tags_in_head', 5);
