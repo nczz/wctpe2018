@@ -7,7 +7,7 @@
         $("#submit_btn").click(function() {
             $("body").waitMe({
                 effect: "bounce",
-                text: "Uploading...(If you are using iOS 12 that you may stuck here. Refresh after 20s. Thank you.)",
+                text: "Uploading...(If you are using iOS 12 that you may stuck here. Refresh after 20s and do not resend again. Thank you. / 如果你使用 iOS 12 操作此功能而停在這個畫面，請於20秒左右重新整理並不要重新傳送表單，謝謝。)",
             });
         });
         $("#qa-image").change(function() {
