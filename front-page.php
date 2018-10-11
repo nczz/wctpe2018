@@ -30,7 +30,7 @@ endwhile
 <?php else: ?>
 <p><?php echo 'Sorry, no posts here.'; ?></p>
 <?php endif;?>
-<a class="f_btn" href="/submit">投稿 / Share it!</a>
+<a class="f_btn" href="/submit">這是什麼？ / What's this?</a>
 </div>
 </div>
 <?php get_footer();?>
