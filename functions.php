@@ -196,7 +196,7 @@ function wctpe2018_form_shortcode($atts) {
 			$("#submit_btn").click(function(){
 				$("body").waitMe({
             		effect: "bounce",
-            		text: "Uploading...",
+            		text: "Uploading...(If you are using iOS 12 that you may stuck here.Refresh after 20s. Thank you.)",
         		});
 			});
 			$("#qa-image").change(function(){
