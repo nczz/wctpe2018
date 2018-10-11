@@ -243,6 +243,9 @@ function wctpe2018_display_shortcode($atts) {
 	$show_content = '<div><span id="FBShare">Share to Facebook</span>|<span id="TwitterShare">Share to Twitter</span></div>';
 	$show_content .= '<div class="wctpe2018 posts" id="post-' . esc_attr($id) . '">';
 	if ($website != '') {
+		if (substr($website, 0, 4) != "http") {
+			$website .= "http://" . $website;
+		}
 		$show_content .= '<div class="post-field"><span class="post-desc">Name:</span><a href="' . esc_attr($website) . '">' . esc_html($name) . '</a></div>';
 	} else {
 		$show_content .= '<div class="post-field"><span class="post-desc">Name:</span>' . esc_html($name) . '</div>';
@@ -254,30 +257,6 @@ function wctpe2018_display_shortcode($atts) {
 	$show_content .= '<div class="post-field"><span class="post-desc">Message:</span>' . $content . '</div>';
 	$show_content .= '<div class="post-field"><img src="' . esc_attr($image_large) . '"/></div>';
 	$show_content .= '</div>';
-// 	$show_content .= "<script>
-	// 	jQuery(document).ready(function() {
-	//     jQuery('#FBShare').click(function() {
-	//         FB.ui({
-	//             method: 'share',
-	//             hashtag: '#WordCampTaipei2018',
-	//             quote: '" . esc_attr($name) . " : " . esc_attr($content) . "',
-	//             display: 'popup',
-	//             href: location.href,
-	//         }, function(response) { /*console.log(response);*/ });
-	//     });
-	//     jQuery('#TwitterShare').click(function(){
-	//       var shareURL = 'http://twitter.com/share?';
-	//       var params = {
-	//         url: '" . get_permalink($id) . "',
-	//         text: 'Hey! I am here in WordCamp Taipei 2018 now!',
-	//         via: 'WordCampTaipei',
-	//         hashtags: 'WCTPE,WordCampTaipei2018'
-	//       }
-	//       for(var prop in params) shareURL += '&' + prop + '=' + encodeURIComponent(params[prop]);
-	//       window.open(shareURL, '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
-	//     	});
-	// });
-	// 	</script>";
 	return $show_content;
 }
 
