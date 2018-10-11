@@ -79,7 +79,7 @@ function wctpe2018_form_shortcode($atts) {
 	extract(shortcode_atts(array(
 		'id' => 'wctpe2018_form',
 		'class' => 'wctpe2018_form',
-		'title' => 'WordCamp Taipei 2018 帶給你什麼感覺呢？想拿隱藏版 WAPUU 或是徵才或是與我們保持聯繫嗎？更歡迎你透過這個活動網站幫我們留下大會活動的回憶。',
+		'title' => 'Share it! / 來投稿吧！',
 		'title_tag' => 'h3',
 	), $atts));
 	$content = "";
@@ -165,7 +165,7 @@ function wctpe2018_form_shortcode($atts) {
 			$content .= "<script>alert('發生錯誤，請確認資料是否正確！');</script>";
 		}
 	}
-
+	$content .= "<p>WordCamp Taipei 2018 帶給你什麼感覺呢？</p><p>想拿隱藏版 WAPUU 貼紙或是徵才或是與我們保持聯繫嗎？</p><p>大方的在下方表單留下你的大會活動的回憶吧！</p>";
 	$content .= '<div class="' . esc_attr($class) . '" id="chun-' . esc_attr($id) . '">';
 	if ($title !== '') {
 		$content .= '<' . esc_attr($title_tag) . '>' . esc_html($title) . '</' . esc_attr($title_tag) . '>';
