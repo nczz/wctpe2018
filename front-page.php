@@ -17,7 +17,7 @@
 	// $image_full = get_post_meta(get_the_ID(), 'wctp2018-post-image-full', true);
 	$image_large = get_post_meta(get_the_ID(), 'wctp2018-post-image-large', true);
 
-	echo '<div class="col-md-3 m_b_20 post"><div class="box"><div class=" post_img"><a href="' . get_permalink($post->ID) . '"><img src="' . $image_large . '"/></a></div><a href="' . get_permalink($post->ID) . '" class="name"><h2 >' . $name . ":" . $title . '</h2></a></div></div>';
+	echo '<div class="col-md-3 m_b_20 post"><div class="box"><div class=" post_img"><a href="' . get_permalink($post->ID) . '"><img src="' . $image_large . '"/></a></div><a href="' . get_permalink($post->ID) . '" class="name"><h2 >' . $title . ' By ' . $name . '</h2></a></div></div>';
 endwhile
 ?>
 <!-- End of the main loop -->

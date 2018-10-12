@@ -254,7 +254,7 @@ function insert_social_tags_in_head() {
 		$thumbnail_src = $thumbnail_src[0];
 	}
 	?>
-<meta property="og:title" content="<?php echo "{$name} : {$title}"; ?>" />
+<meta property="og:title" content="<?php echo "{$title} By {$name}"; ?>" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="<?php echo get_permalink($post->ID); ?>" />
 <meta property="og:image" content="<?php echo esc_attr($thumbnail_src); ?>" />
@@ -268,7 +268,7 @@ function insert_social_tags_in_head() {
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@WordCampTaipei" />
 <meta name="twitter:domain" content="<?php echo get_bloginfo('url'); ?>" />
-<meta name="twitter:title" content="<?php echo "{$name} : {$title}"; ?>" />
+<meta name="twitter:title" content="<?php echo "{$title} By {$name}"; ?>" />
 <meta name="twitter:description" content="<?php echo $content; ?>" />
 <meta name="twitter:image" content="<?php echo esc_attr($thumbnail_src); ?>" />
 <meta itemprop="image" content="<?php echo esc_attr($thumbnail_src); ?>" />
