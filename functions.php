@@ -184,8 +184,8 @@ function wctpe2018_form_shortcode($atts) {
 	$content .= '<div class="qa-field"><span class="qa-desc">Name*</span><input type="text" id="qa-name" placeholder="Name / 稱呼" value="' . $user_name . '" name="mxp-name"/></div>';
 	$content .= '<div class="qa-field"><span class="qa-desc">Email*</span><input type="text" id="qa-email" placeholder="Email / 信箱" value="' . $user_email . '" name="mxp-email"/></div>';
 	$content .= '<div class="qa-field"><span class="qa-desc">Website</span><input type="text" id="qa-website" placeholder="Website / 網站 http(s)://..." value="' . $user_website . '" name="mxp-website"/></div>';
-	$content .= '<div class="qa-field"><span class="qa-desc">Title*</span><input type="text" id="qa-title" placeholder="Who are you? What are you looking for?/ 你是誰？想找什麼呢？" value="' . $user_posttitle . '" name="mxp-title"/></div>';
-	$content .= '<div class="qa-field"><span class="qa-desc">Message*</span><textarea id="qa-content" placeholder="Message / 內文" value="" name="mxp-content"></textarea></div>';
+	$content .= '<div class="qa-field"><span class="qa-desc">Who are you? / 你是什麼人呢？*</span><input type="text" id="qa-title" placeholder="Tell us here! / 跟我們說吧！" value="' . $user_posttitle . '" name="mxp-title"/></div>';
+	$content .= '<div class="qa-field"><span class="qa-desc">What are you looking for? / 想說什麼呢？*</span><textarea id="qa-content" placeholder="Message / 內文" value="" name="mxp-content"></textarea></div>';
 	$content .= '<div class="qa-field"><span class="qa-desc">Image*</span><input type="file" id="qa-image" accept="image/*"/></div>';
 	$content .= '<div class="qa-field"><input type="hidden" id="qa-image-proc"  value="" name="mxp-image"/></div>';
 	$content .= '<div class="qa-field "><input type="hidden" value="' . esc_attr($id) . '" name="mxp-postkey"/></div>';
@@ -254,7 +254,7 @@ function insert_social_tags_in_head() {
 		$thumbnail_src = $thumbnail_src[0];
 	}
 	?>
-<meta property="og:title" content="<?php echo "{$title} By {$name}"; ?>" />
+<meta property="og:title" content="<?php echo "{$title} - {$name}"; ?>" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="<?php echo get_permalink($post->ID); ?>" />
 <meta property="og:image" content="<?php echo esc_attr($thumbnail_src); ?>" />
@@ -268,7 +268,7 @@ function insert_social_tags_in_head() {
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@WordCampTaipei" />
 <meta name="twitter:domain" content="<?php echo get_bloginfo('url'); ?>" />
-<meta name="twitter:title" content="<?php echo "{$title} By {$name}"; ?>" />
+<meta name="twitter:title" content="<?php echo "{$title} - {$name}"; ?>" />
 <meta name="twitter:description" content="<?php echo $content; ?>" />
 <meta name="twitter:image" content="<?php echo esc_attr($thumbnail_src); ?>" />
 <meta itemprop="image" content="<?php echo esc_attr($thumbnail_src); ?>" />
