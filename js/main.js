@@ -74,6 +74,8 @@
                 if (md.userAgent() == 'Chrome') {
                     location.href = '/page/' + (WCTPE.posts.current_page + 1) + '/';
                 }
+                alert(md.userAgent());
+                return;
             }
             $.post(WCTPE.ajaxurl, data, function(res) {
                 if (res.success) {
