@@ -269,7 +269,9 @@ function mxp_wctpe2018_form_processing() {
 			require_once ABSPATH . "wp-admin" . '/includes/file.php';
 			require_once ABSPATH . "wp-admin" . '/includes/media.php';
 		}
-
+		$url = parse_url($_SERVER['REQUEST_URI']);
+		$path = isset($url['path']) ? $url['path'] : '';
+		$query = isset($url['query']) ? '?' . $url['query'] : '';
 		//$accept_mime_type = array('image/png', 'image/jpeg', 'image/gif');
 		if (isset($_POST['mxp-image']) && $_POST['mxp-image'] != "" &&
 			isset($_POST['mxp-name']) && $_POST['mxp-name'] != "" &&
@@ -344,10 +346,18 @@ function mxp_wctpe2018_form_processing() {
 				wp_redirect(get_post_permalink($pid));
 				exit;
 			} else {
-				echo "<script>alert('Do not hack me..QQ');</script>";
+				if ($path != '' && $query != '') {
+					wp_redirect($path . '?oops=1');
+					exit;
+				}
 			}
 		} else {
-			echo "<script>alert('發生錯誤，請確認資料是否正確！ / Checking required fields, please!');</script>";
+			if ($path != '') {
+				wp_redirect($path . '?oops=2');
+				exit;
+				//echo "<script>alert('" . $path . $query . '#ooops' . "發生錯誤，請確認資料是否正確！ / Checking required fields, please!');</script>";
+			}
+
 		}
 	}
 }

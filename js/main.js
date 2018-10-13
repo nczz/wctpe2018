@@ -1,5 +1,19 @@
 (function($) {
     $(document).ready(function() {
+        var qm = document.location.search.replace(/(^\?)/, '').split("&").map(function(n) {
+            return n = n.split("="), this[n[0]] = n[1], this }.bind({}))[0];
+        if (qm.oops !== undefined) {console.log(qm.oops);
+            switch (qm.oops) {
+                case '1':
+                    alert("Don't hack me, please!");
+                    break;
+                case '2':
+                    alert("發生錯誤，請確認資料是否正確！ / Checking required fields, please!");
+                    break;
+                default:
+                    break;
+            }
+        }
         var md = new MobileDetect(window.navigator.userAgent);
 
         function draw(id, imgsrc) {
@@ -97,7 +111,7 @@
                 }
                 $("body").waitMe('hide');
             }).fail(function() {
-                alert('Oops! Sorry error occurred! Check internet.');
+                alert('Oops! Sorry error occurred! Internet issue.');
             });
         });
         $('.new_posts').click(function() {
