@@ -107,10 +107,6 @@ function wctpe2018_form_shortcode($atts) {
 			$email = filter_var($email, FILTER_VALIDATE_EMAIL) ? $email : "nobody";
 			$posttitle = strip_tags($_POST['mxp-title']);
 			$content = nl2br(strip_tags($_POST['mxp-content']));
-			setcookie('user_name', $name, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
-			setcookie('user_email', $email, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
-			setcookie('user_website', $website, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
-			setcookie('user_posttitle', $posttitle, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
 
 			//建立一篇文章
 			$now = time();
@@ -195,8 +191,8 @@ function wctpe2018_form_shortcode($atts) {
 	$content .= '<div class="qa-field"><input type="hidden" id="qa-image-proc"  value="" name="mxp-image"/></div>';
 	$content .= '<div class="qa-field "><input type="hidden" value="' . esc_attr($id) . '" name="mxp-postkey"/></div>';
 	$content .= '<div id="img-preview"></div>';
-	$content .= '<button id="submit_btn">Submit</button>';
 	$content .= '</form>';
+	$content .= '<button id="submit_btn">Submit</button>';
 	$content .= '</div>';
 	return $content;
 }
@@ -347,3 +343,20 @@ function mxp_ajax_get_next_page_data() {
 	wp_send_json_success(array('code' => 200, 'data' => $str));
 }
 add_action('wp_ajax_nopriv_mxp_ajax_get_next_page_data', 'mxp_ajax_get_next_page_data');
+
+function mxp_remenber_me() {
+	if (isset($_POST['mxp-name']) && $_POST['mxp-name'] != "" &&
+		isset($_POST['mxp-email']) && $_POST['mxp-email'] != "" &&
+		isset($_POST['mxp-title']) && $_POST['mxp-title'] != "") {
+		$name = strip_tags($_POST['mxp-name']);
+		$email = strip_tags($_POST['mxp-email']);
+		$website = isset($_POST['mxp-website']) ? strip_tags($_POST['mxp-website']) : "";
+		$email = filter_var($email, FILTER_VALIDATE_EMAIL) ? $email : "";
+		$posttitle = strip_tags($_POST['mxp-title']);
+		setcookie('user_name', $name, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+		setcookie('user_email', $email, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+		setcookie('user_website', $website, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+		setcookie('user_posttitle', $posttitle, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+	}
+}
+add_action('init', 'mxp_remenber_me');

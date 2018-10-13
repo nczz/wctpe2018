@@ -1,15 +1,21 @@
 (function($) {
-    function draw(id, imgsrc) {
-        $("#" + id).html('<img src=' + imgsrc + ' id="img-preview" height="200" alt="Image preview...">');
-    }
-
     $(document).ready(function() {
+        var md = new MobileDetect(window.navigator.userAgent);
+
+        function draw(id, imgsrc) {
+            $("#" + id).html('<img src=' + imgsrc + ' id="img-preview" height="200" alt="Image preview...">');
+        }
         //For Submit
         $("#submit_btn").click(function() {
             $("body").waitMe({
                 effect: "bounce",
                 text: "Uploading...(If you are using iOS 12 and Chrome app that you may stuck here. Refresh after 20s and do not resend again. Thank you. / 如果你使用 iOS 12 且 Chrome App 操作此功能而停在這個畫面，請於20秒左右重新整理並不要重新傳送表單，謝謝。)",
             });
+            if (md.is('iOS') && parseInt(md.version('iOS')) == 12) {
+                if (md.userAgent() == 'Chrome') {
+                    $('#wctpe2018_form').attr('target', '_blank');
+                }
+            }
             // $('#wctpe2018_form').attr('target', 'wctpe_ios12_bug_fixed');
             // $('#wctpe2018_form').attr('action', location.href);
             // var iframe = document.createElement('iframe');
@@ -18,7 +24,7 @@
             // iframe.setAttribute('name', 'wctpe_ios12_bug_fixed');
             // iframe.setAttribute('style', 'display:none;');
             // $("body").append(iframe);
-            // $('#wctpe2018_form').submit();
+            $('#wctpe2018_form').submit();
         });
         $("#qa-image").change(function() {
             input = document.getElementById("qa-image");
@@ -55,7 +61,6 @@
         $('.more_posts').click(function() {
             $(this).attr('disabled', true);
             var that = $(this);
-            var md = new MobileDetect(window.navigator.userAgent);
             if (WCTPE.posts.max_num_pages == WCTPE.posts.current_page) {
                 $(this).text('The END! / 最後一頁');
                 $(this).unbind('click');
