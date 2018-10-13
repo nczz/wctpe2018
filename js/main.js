@@ -73,8 +73,8 @@
             if (md.is('iOS') && parseInt(md.version('iOS')) == 12) {
                 if (md.userAgent() == 'Chrome') {
                     location.href = '/page/' + (WCTPE.posts.current_page + 1) + '/';
+                    return;
                 }
-                return;
             }
             $.post(WCTPE.ajaxurl, data, function(res) {
                 if (res.success) {
