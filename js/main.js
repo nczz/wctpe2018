@@ -9,10 +9,11 @@
         $("#submit_btn").click(function() {
             $("body").waitMe({
                 effect: "bounce",
-                text: "Uploading...(If you are using iOS 12 and Chrome app that you may stuck here. Refresh after 20s and do not resend again. Thank you. / 如果你使用 iOS 12 且 Chrome App 操作此功能而停在這個畫面，請於20秒左右重新整理並不要重新傳送表單，謝謝。)",
+                text: "Uploading...",
             });
             if (md.is('iOS') && parseInt(md.version('iOS')) == 12) {
                 if (md.userAgent() == 'Chrome') {
+                    // 針對 iOS12 + Chrome App 的使用者做的表單前處理
                     // $('#wctpe2018_form').attr('target', '_blank');
                     // $('#wctpe2018_form').attr('action', location.href + '?t=' + new Date().getTime());
                 }
@@ -36,7 +37,7 @@
                     draw("img-preview", img.toDataURL("image/jpeg"));
                 }, { maxWidth: 1024, canvas: true, orientation: true });
             if (!loadingImage) {
-                alert("Too old to use this browser! Update it please!");
+                alert("Too old to use this browser! Update it please! / 你的瀏覽器舊到一個極致了！再麻煩升級主流新版的瀏覽器，謝謝。");
             }
         });
         $('#FBShare').click(function() {
