@@ -88,89 +88,7 @@ function wctpe2018_form_shortcode($atts) {
 		'title_tag' => 'h3',
 	), $atts));
 	$content = "";
-	if (isset($_POST['mxp-postkey']) && $_POST['mxp-postkey'] == $id) {
-		if (!function_exists('media_handle_upload')) {
-			require_once ABSPATH . "wp-admin" . '/includes/image.php';
-			require_once ABSPATH . "wp-admin" . '/includes/file.php';
-			require_once ABSPATH . "wp-admin" . '/includes/media.php';
-		}
 
-		//$accept_mime_type = array('image/png', 'image/jpeg', 'image/gif');
-		if (isset($_POST['mxp-image']) && $_POST['mxp-image'] != "" &&
-			isset($_POST['mxp-name']) && $_POST['mxp-name'] != "" &&
-			isset($_POST['mxp-email']) && $_POST['mxp-email'] != "" &&
-			isset($_POST['mxp-title']) && $_POST['mxp-title'] != "" &&
-			isset($_POST['mxp-content']) && $_POST['mxp-content'] != "") {
-			$name = strip_tags($_POST['mxp-name']);
-			$email = strip_tags($_POST['mxp-email']);
-			$website = isset($_POST['mxp-website']) ? strip_tags($_POST['mxp-website']) : "";
-			$email = filter_var($email, FILTER_VALIDATE_EMAIL) ? $email : "nobody";
-			$posttitle = strip_tags($_POST['mxp-title']);
-			$content = nl2br(strip_tags($_POST['mxp-content']));
-
-			//建立一篇文章
-			$now = time();
-			$pid = wp_insert_post(array(
-				'post_title' => $name . " : " . $posttitle,
-				'post_content' => '',
-				'post_name' => 'post-' . $now,
-				'post_excerpt' => $content,
-				'post_status' => "publish",
-				'post_author' => 1,
-				'post_category' => 0,
-				'tags_input' => array('WCTPE'),
-				'comment_status' => "open",
-				'ping_status' => "open",
-				'post_type' => "post",
-			));
-			add_post_meta($pid, 'wctp2018-post-datetime', $now);
-			add_post_meta($pid, 'wctp2018-author-email', $email);
-			add_post_meta($pid, 'wctpe2018-author-website', $website);
-			add_post_meta($pid, 'wctp2018-author-name', $name);
-			add_post_meta($pid, 'wctp2018-post-title', $posttitle);
-			add_post_meta($pid, 'wctp2018-post-content', $content);
-			$base64_image_string = $_POST['mxp-image'];
-			$splited = explode(',', substr($base64_image_string, 5), 2);
-			$mime = $splited[0];
-			$data = $splited[1];
-
-			$mime_split_without_base64 = explode(';', $mime, 2);
-			$mime_split = explode('/', $mime_split_without_base64[0], 2);
-			$extension = "";
-			$output_file_with_extension = "";
-			if (count($mime_split) == 2) {
-				$extension = $mime_split[1];
-				if ($extension == 'jpeg') {
-					$extension = 'jpg';
-				}
-				$output_file_with_extension = 'user-upload-' . time() . '.' . $extension;
-			}
-			if (in_array($extension, array('jpg')) && $output_file_with_extension != "") {
-				$tempName = tempnam(sys_get_temp_dir(), 'mxp-tw');
-				$tempName = realpath($tempName);
-				file_put_contents($tempName, base64_decode($data));
-				$tid = media_handle_sideload(array('name' => $output_file_with_extension, 'type' => 'image/jpeg', 'tmp_name' => $tempName, 'error' => 0, 'size' => strlen($data)), $pid, $name . " / " . $posttitle);
-				if (!is_wp_error($tid)) {
-					$src = wp_get_attachment_url($tid);
-					$large_thum = image_downsize($tid, 'large');
-					$large_thum_path = $large_thum[0];
-					add_post_meta($pid, 'wctp2018-post-image-full', $src);
-					add_post_meta($pid, 'wctp2018-post-image-large', $large_thum_path);
-					set_post_thumbnail($pid, $tid);
-				}
-				$update_post = array(
-					'ID' => $pid,
-					'post_content' => '[wctpe2018_display id="' . $pid . '"]',
-				);
-				wp_update_post($update_post);
-				return '<script>alert("Thank you! Now redirect to your post.");setTimeout(function(){window.top.location.href="' . get_post_permalink($pid) . '";location.href="' . get_post_permalink($pid) . '";},500);</script>';
-			} else {
-				$content .= "<script>alert('Do not hack me..QQ');</script>";
-			}
-		} else {
-			$content .= "<script>alert('發生錯誤，請確認資料是否正確！');</script>";
-		}
-	}
 	$user_name = isset($_COOKIE['user_name']) ? $_COOKIE['user_name'] : "";
 	$user_website = isset($_COOKIE['user_website']) ? $_COOKIE['user_website'] : "";
 	$user_posttitle = isset($_COOKIE['user_posttitle']) ? $_COOKIE['user_posttitle'] : "";
@@ -189,7 +107,7 @@ function wctpe2018_form_shortcode($atts) {
 	$content .= '<div class="qa-field"><span class="qa-desc">What are you looking for? / 想說什麼呢？*</span><textarea id="qa-content" placeholder="Message / 內文" value="" name="mxp-content"></textarea></div>';
 	$content .= '<div class="qa-field"><span class="qa-desc">Image*</span><input type="file" id="qa-image" accept="image/*"/></div>';
 	$content .= '<div class="qa-field"><input type="hidden" id="qa-image-proc"  value="" name="mxp-image"/></div>';
-	$content .= '<div class="qa-field "><input type="hidden" value="' . esc_attr($id) . '" name="mxp-postkey"/></div>';
+	$content .= '<div class="qa-field "><input type="hidden" value="' . wp_create_nonce('mxp-wctpe2018form-nonce') . '" name="mxp-postkey"/></div>';
 	$content .= '<div id="img-preview"></div>';
 	$content .= '</form>';
 	$content .= '<button id="submit_btn">Submit</button>';
@@ -344,19 +262,93 @@ function mxp_ajax_get_next_page_data() {
 }
 add_action('wp_ajax_nopriv_mxp_ajax_get_next_page_data', 'mxp_ajax_get_next_page_data');
 
-function mxp_remenber_me() {
-	if (isset($_POST['mxp-name']) && $_POST['mxp-name'] != "" &&
-		isset($_POST['mxp-email']) && $_POST['mxp-email'] != "" &&
-		isset($_POST['mxp-title']) && $_POST['mxp-title'] != "") {
-		$name = strip_tags($_POST['mxp-name']);
-		$email = strip_tags($_POST['mxp-email']);
-		$website = isset($_POST['mxp-website']) ? strip_tags($_POST['mxp-website']) : "";
-		$email = filter_var($email, FILTER_VALIDATE_EMAIL) ? $email : "";
-		$posttitle = strip_tags($_POST['mxp-title']);
-		setcookie('user_name', $name, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
-		setcookie('user_email', $email, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
-		setcookie('user_website', $website, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
-		setcookie('user_posttitle', $posttitle, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+function mxp_wctpe2018_form_processing() {
+	if (isset($_POST['mxp-postkey']) && wp_verify_nonce($_POST['mxp-postkey'], 'mxp-wctpe2018form-nonce')) {
+		if (!function_exists('media_handle_upload')) {
+			require_once ABSPATH . "wp-admin" . '/includes/image.php';
+			require_once ABSPATH . "wp-admin" . '/includes/file.php';
+			require_once ABSPATH . "wp-admin" . '/includes/media.php';
+		}
+
+		//$accept_mime_type = array('image/png', 'image/jpeg', 'image/gif');
+		if (isset($_POST['mxp-image']) && $_POST['mxp-image'] != "" &&
+			isset($_POST['mxp-name']) && $_POST['mxp-name'] != "" &&
+			isset($_POST['mxp-email']) && $_POST['mxp-email'] != "" &&
+			isset($_POST['mxp-title']) && $_POST['mxp-title'] != "" &&
+			isset($_POST['mxp-content']) && $_POST['mxp-content'] != "") {
+			$name = strip_tags($_POST['mxp-name']);
+			$email = strip_tags($_POST['mxp-email']);
+			$website = isset($_POST['mxp-website']) ? strip_tags($_POST['mxp-website']) : "";
+			$email = filter_var($email, FILTER_VALIDATE_EMAIL) ? $email : "Anonymous";
+			$posttitle = strip_tags($_POST['mxp-title']);
+			$content = nl2br(strip_tags($_POST['mxp-content']));
+			setcookie('user_name', $name, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+			setcookie('user_email', $email, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+			setcookie('user_website', $website, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+			setcookie('user_posttitle', $posttitle, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+			//建立一篇文章
+			$now = time();
+			$pid = wp_insert_post(array(
+				'post_title' => $name . " : " . $posttitle,
+				'post_content' => '',
+				'post_name' => 'post-' . $now,
+				'post_excerpt' => $content,
+				'post_status' => "publish",
+				'post_author' => 1,
+				'post_category' => 0,
+				'tags_input' => array('WCTPE'),
+				'comment_status' => "open",
+				'ping_status' => "open",
+				'post_type' => "post",
+			));
+			add_post_meta($pid, 'wctp2018-post-datetime', $now);
+			add_post_meta($pid, 'wctp2018-author-email', $email);
+			add_post_meta($pid, 'wctpe2018-author-website', $website);
+			add_post_meta($pid, 'wctp2018-author-name', $name);
+			add_post_meta($pid, 'wctp2018-post-title', $posttitle);
+			add_post_meta($pid, 'wctp2018-post-content', $content);
+			$base64_image_string = $_POST['mxp-image'];
+			$splited = explode(',', substr($base64_image_string, 5), 2);
+			$mime = $splited[0];
+			$data = $splited[1];
+
+			$mime_split_without_base64 = explode(';', $mime, 2);
+			$mime_split = explode('/', $mime_split_without_base64[0], 2);
+			$extension = "";
+			$output_file_with_extension = "";
+			if (count($mime_split) == 2) {
+				$extension = $mime_split[1];
+				if ($extension == 'jpeg') {
+					$extension = 'jpg';
+				}
+				$output_file_with_extension = 'user-upload-' . time() . '.' . $extension;
+			}
+			if (in_array($extension, array('jpg')) && $output_file_with_extension != "") {
+				$tempName = tempnam(sys_get_temp_dir(), 'mxp-tw');
+				$tempName = realpath($tempName);
+				file_put_contents($tempName, base64_decode($data));
+				$tid = media_handle_sideload(array('name' => $output_file_with_extension, 'type' => 'image/jpeg', 'tmp_name' => $tempName, 'error' => 0, 'size' => strlen($data)), $pid, $name . " / " . $posttitle);
+				if (!is_wp_error($tid)) {
+					$src = wp_get_attachment_url($tid);
+					$large_thum = image_downsize($tid, 'large');
+					$large_thum_path = $large_thum[0];
+					add_post_meta($pid, 'wctp2018-post-image-full', $src);
+					add_post_meta($pid, 'wctp2018-post-image-large', $large_thum_path);
+					set_post_thumbnail($pid, $tid);
+				}
+				$update_post = array(
+					'ID' => $pid,
+					'post_content' => '[wctpe2018_display id="' . $pid . '"]',
+				);
+				wp_update_post($update_post);
+				wp_redirect(get_post_permalink($pid));
+				exit;
+			} else {
+				echo "<script>alert('Do not hack me..QQ');</script>";
+			}
+		} else {
+			echo "<script>alert('發生錯誤，請確認資料是否正確！ / Checking required fields, please!');</script>";
+		}
 	}
 }
-add_action('init', 'mxp_remenber_me');
+add_action('init', 'mxp_wctpe2018_form_processing');
