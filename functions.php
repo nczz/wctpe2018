@@ -6,6 +6,10 @@ function custom_enqueue_styles() {
 	wp_enqueue_script('waitMe_js', get_template_directory_uri() . '/js/waitMe.min.js');
 	wp_enqueue_style('waitMe_css', get_template_directory_uri() . '/css/waitMe.min.css');
 	wp_enqueue_script('main', get_template_directory_uri() . '/js/main.js');
+	wp_localize_script('main', 'WCTPE', array(
+		'ajaxurl' => admin_url('admin-ajax.php'),
+		'nonce' => wp_create_nonce('mxp-ajax-nonce'),
+	));
 	wp_enqueue_style('bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css');
 	wp_enqueue_style('custom_css', get_template_directory_uri() . '/css/style.css');
 }
@@ -213,9 +217,8 @@ function wctpe2018_display_shortcode($atts) {
 	$image_full = get_post_meta($id, 'wctp2018-post-image-full', true);
 	$image_large = get_post_meta($id, 'wctp2018-post-image-large', true);
 
-	
 	$show_content .= '<div class="wctpe2018 posts row" id="post-' . esc_attr($id) . '">
-	
+
 	<div class="col-md-5 m_b_20">';
 	if ($website != '') {
 		if (substr($website, 0, 4) != "http") {
@@ -314,3 +317,34 @@ ga('send', 'pageview');
 endif;
 }
 add_action('wp_head', 'insert_GA_in_head', 6);
+
+function mxp_ajax_get_next_page_data() {
+	$max_num_pages = $_POST['max_num_pages'];
+	$current_page = $_POST['current_page'];
+	$found_posts = $_POST['found_posts'];
+	$nonce = $_POST['nonce'];
+	if (!wp_verify_nonce($nonce, 'mxp-ajax-nonce')) {
+		wp_send_json_error(array('code' => 500, 'data' => '', 'msg' => '錯誤的請求'));
+	}
+	if (!isset($max_num_pages) || $max_num_pages == "" ||
+		!isset($current_page) || $current_page == "" ||
+		!isset($found_posts) || $found_posts == "") {
+		wp_send_json_error(array('code' => 500, 'data' => '', 'msg' => '錯誤的請求'));
+	}
+	$ids = get_posts(array(
+		'fields' => 'ids', // Only get post IDs
+		'posts_per_page' => get_option('posts_per_page'),
+		'post_type' => 'post',
+		'paged' => intval($current_page) + 1,
+	));
+	$str = '';
+	foreach ($ids as $key => $id) {
+		$name = get_post_meta($id, 'wctp2018-author-name', true);
+		$title = mb_substr(get_post_meta($id, 'wctp2018-post-title', true), 0, 20);
+		$content = get_post_meta($id, 'wctp2018-post-content', true);
+		$image_large = get_post_meta($id, 'wctp2018-post-image-large', true);
+		$str .= '<div class="col-md-3 m_b_20 post"><div class="box"><div class=" post_img"><a href="' . get_permalink($id) . '"><img src="' . $image_large . '"/></a></div><a href="' . get_permalink($id) . '" class="name"><h2 >' . $title . ' - ' . $name . '</h2></a></div></div>';
+	}
+	wp_send_json_success(array('code' => 200, 'data' => $str));
+}
+add_action('wp_ajax_mxp_ajax_get_next_page_data', 'mxp_ajax_get_next_page_data');

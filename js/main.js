@@ -51,5 +51,30 @@
             for (var prop in params) shareURL += '&' + prop + '=' + encodeURIComponent(params[prop]);
             window.open(shareURL, '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
         });
+        $('.more_posts').click(function() {
+            $("body").waitMe({
+                effect: "bounce",
+                text: "Loading...",
+            });
+            var data = {
+                'action': 'mxp_ajax_get_next_page_data',
+                'nonce': WCTPE.nonce,
+                'max_num_pages': WCTPE.posts.max_num_pages,
+                'current_page': WCTPE.posts.current_page,
+                'found_posts': WCTPE.posts.found_posts,
+            };
+            $.post(WCTPE.ajaxurl, data, function(res) {
+                if (res.success) {
+                    $('.tattoo_posts_lists').append(res.data.data);
+                    history.pushState(null, null, '/page/' + (WCTPE.posts.current_page + 1) + '/');
+                } else {
+                    alert('Oops! Sorry error occurred!');
+                }
+                $("body").waitMe('hide');
+            });
+        });
+        $('.new_posts').click(function() {
+            location.href = '/';
+        });
     });
 }(jQuery))
