@@ -14,7 +14,7 @@
             if (md.is('iOS') && parseInt(md.version('iOS')) == 12) {
                 if (md.userAgent() == 'Chrome') {
                     // $('#wctpe2018_form').attr('target', '_blank');
-                    $('#wctpe2018_form').attr('action', location.href + '?t=' + new Date().getTime());
+                    // $('#wctpe2018_form').attr('action', location.href + '?t=' + new Date().getTime());
                 }
             }
             // $('#wctpe2018_form').attr('target', 'wctpe_ios12_bug_fixed');
