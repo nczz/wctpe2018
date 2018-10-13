@@ -346,7 +346,7 @@ function mxp_wctpe2018_form_processing() {
 				wp_redirect(get_post_permalink($pid));
 				exit;
 			} else {
-				if ($path != '' && $query != '') {
+				if ($path != '') {
 					wp_redirect($path . '?oops=1');
 					exit;
 				}
@@ -355,7 +355,6 @@ function mxp_wctpe2018_form_processing() {
 			if ($path != '') {
 				wp_redirect($path . '?oops=2');
 				exit;
-				//echo "<script>alert('" . $path . $query . '#ooops' . "發生錯誤，請確認資料是否正確！ / Checking required fields, please!');</script>";
 			}
 
 		}
