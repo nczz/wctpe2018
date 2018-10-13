@@ -260,3 +260,20 @@ max-width: 100%;
 #TwitterShare:hover {
   opacity: 0.8;
 }
+
+.more_btn{
+  text-align: center;
+}
+.more_btn a{
+  padding:15px;
+  display: block;
+  width: 100%;
+  background-color: #35a8bb;
+  color:#fff;
+  text-decoration: none;
+  margin-bottom: 15px;
+}
+.more_btn a:hover{
+  opacity: 0.8;
+
+}
