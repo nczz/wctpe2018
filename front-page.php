@@ -29,12 +29,9 @@ endwhile
 </div>
 <!-- End of the main loop -->
 
-<!-- Add the pagination functions here. -->
-<!-- <div class="nav-previous alignleft"><?php previous_posts_link('Older posts / 後一頁');?></div>
-<div class="nav-next alignright"><?php next_posts_link('Newer posts / 前一頁');?></div> -->
 </div>
 <?php else: ?>
-<p><?php echo 'Sorry, no posts here.'; ?></p>
+<p><?php echo '<p class="text-center">Sorry, no posts here. <a href="/submit/">Strat from you now!</a> / 尚未有投稿哦！<a href="/submit/">來當第一個吧～</a></p>'; ?></p>
 <?php endif;?>
 <div class="row more_btn">
 <?php if ($wp_query->max_num_pages > 1 && ($paged + 1) <= $wp_query->max_num_pages): ?>
