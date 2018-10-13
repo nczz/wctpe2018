@@ -41,6 +41,15 @@ padding: 20px;
 .nav-menu li a{
          color: #259db4;
          font-size: 16px;
+         border:1px solid #259db4;
+             padding: 5px 10px;
+             border-radius: 15px;
+             display: inline-block;
+             text-decoration: none;
+}
+.nav-menu li a:hover{
+        background-color: #259db4;
+        color:#fff;
 }
 
 
@@ -197,6 +206,7 @@ max-width: 100%;
 .wctpe2018.posts{
       max-width: 800px;
       margin: 0 auto;
+      min-height: 800px;
 }
 
 
@@ -219,4 +229,34 @@ max-width: 100%;
 
 .page .footer {
   margin-bottom: 0px;
+}
+
+/* share */
+
+#FBShare{
+  background: url('../img/facebook_share.jpg');
+  background-size: contain;
+      display: inline-block;
+      min-width: 135px;
+      height: 35px;
+    text-indent: -9999;
+    margin-right: 10px;
+    cursor: pointer;
+}
+#FBShare:hover{
+  opacity: 0.8;
+}
+
+#TwitterShare{
+  background: url('../img/twitter_share.jpg');
+ background-size: contain;
+ display: inline-block;
+      min-width: 135px;
+      height: 35px;
+     text-indent: -9999;
+      cursor: pointer;
+}
+
+#TwitterShare:hover {
+  opacity: 0.8;
 }

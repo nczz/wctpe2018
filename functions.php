@@ -175,7 +175,7 @@ function wctpe2018_form_shortcode($atts) {
 	$user_posttitle = isset($_COOKIE['user_posttitle']) ? $_COOKIE['user_posttitle'] : "";
 	$user_email = isset($_COOKIE['user_email']) ? $_COOKIE['user_email'] : "";
 
-	$content .= "<p>WordCamp Taipei 2018 帶給你什麼感覺呢？</p><p>想拿隱藏版 WAPUU 貼紙或是徵才或是與我們保持聯繫嗎？</p><p>大方的在下方表單留下你的大會活動的回憶吧！</p>";
+	$content .= "<p class='text-center'>WordCamp Taipei 2018 帶給你什麼感覺呢？</p><p class='text-center'>想拿隱藏版 WAPUU 貼紙或是徵才或是與我們保持聯繫嗎？</p><p class='text-center'>大方的在下方表單留下你的大會活動的回憶吧！</p>";
 	$content .= '<div class="' . esc_attr($class) . '" id="chun-' . esc_attr($id) . '">';
 	if ($title !== '') {
 		$content .= '<' . esc_attr($title_tag) . '>' . esc_html($title) . '</' . esc_attr($title_tag) . '>';
@@ -213,8 +213,10 @@ function wctpe2018_display_shortcode($atts) {
 	$image_full = get_post_meta($id, 'wctp2018-post-image-full', true);
 	$image_large = get_post_meta($id, 'wctp2018-post-image-large', true);
 
-	$show_content = '<div><span id="FBShare">Share to Facebook</span>|<span id="TwitterShare">Share to Twitter</span></div>';
-	$show_content .= '<div class="wctpe2018 posts" id="post-' . esc_attr($id) . '">';
+	
+	$show_content .= '<div class="wctpe2018 posts row" id="post-' . esc_attr($id) . '">
+	
+	<div class="col-md-5 m_b_20">';
 	if ($website != '') {
 		if (substr($website, 0, 4) != "http") {
 			$website = "http://" . $website;
@@ -227,9 +229,13 @@ function wctpe2018_display_shortcode($atts) {
 		$show_content .= '<div class="post-field"><span class="post-desc">Email:</span>' . esc_html($email) . '</div>';
 	}
 	$show_content .= '<div class="post-field"><span class="post-desc">Title:</span>' . esc_html($title) . '</div>';
-	$show_content .= '<div class="post-field"><span class="post-desc">Message:</span>' . $content . '</div>';
-	$show_content .= '<div class="post-field"><img src="' . esc_attr($image_large) . '"/></div>';
+	$show_content .= '<div class="post-field"><span class="post-desc">Message:</span>' . $content . '</div>
+	<div><span id="FBShare">Share to Facebook</span><span id="TwitterShare">Share to Twitter</span></div>
+	</div>';
+	$show_content .= '<div class="col-md-7"><div class="post-field"><img src="' . esc_attr($image_large) . '"/></div></div>';
+	// $show_content .= '';
 	$show_content .= '</div>';
+
 	return $show_content;
 }
 
