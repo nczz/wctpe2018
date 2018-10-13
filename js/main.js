@@ -65,8 +65,10 @@
                 'found_posts': WCTPE.posts.found_posts,
             };
             var md = new MobileDetect(window.navigator.userAgent);
-            if (md.is('iOS') && md.is('Chrome') && md.version('iOS') > 11) {
-                location.href = '/page/' + (WCTPE.posts.current_page + 1) + '/';
+            if (md.is('iOS') && md.version('iOS') == 12) {
+                if (md.version('Chrome')) {
+                    location.href = '/page/' + (WCTPE.posts.current_page + 1) + '/';
+                }
             }
             $.post(WCTPE.ajaxurl, data, function(res) {
                 if (res.success) {
