@@ -65,7 +65,7 @@
                 'found_posts': WCTPE.posts.found_posts,
             };
             var md = new MobileDetect(window.navigator.userAgent);
-            if (md.is('iOS') && md.version('iOS') == 12) {
+            if (md.is('iOS') && parseInt(md.version('iOS')) == 12) {
                 if (md.userAgent() == 'Chrome') {
                     location.href = '/page/' + (WCTPE.posts.current_page + 1) + '/';
                 }
