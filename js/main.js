@@ -66,7 +66,7 @@
             };
             var md = new MobileDetect(window.navigator.userAgent);
             if (md.is('iOS') && md.version('iOS') == 12) {
-                if (md.version('Chrome')) {
+                if (md.userAgent() == 'Chrome') {
                     location.href = '/page/' + (WCTPE.posts.current_page + 1) + '/';
                 }
             }
