@@ -37,7 +37,7 @@ endwhile
 <p><?php echo 'Sorry, no posts here.'; ?></p>
 <?php endif;?>
 <a class=" new_posts" href="javascript://">Find News / 查看最新</a>
-<?php if ($wp_query->max_num_pages > 1 || $wp_query->max_num_pages >= $paged): ?>
+<?php if ($wp_query->max_num_pages > 1 || ($paged + 1) > $wp_query->max_num_pages): ?>
 <a class=" more_posts" href="javascript://">Load More / 載入更多</a>
 <?php endif;?>
 <a class="f_btn" href="/submit">這是什麼？ / What's this?</a>

@@ -348,4 +348,4 @@ function mxp_ajax_get_next_page_data() {
 	}
 	wp_send_json_success(array('code' => 200, 'data' => $str));
 }
-add_action('wp_ajax_mxp_ajax_get_next_page_data', 'mxp_ajax_get_next_page_data');
+add_action('wp_ajax_nopriv_mxp_ajax_get_next_page_data', 'mxp_ajax_get_next_page_data');
