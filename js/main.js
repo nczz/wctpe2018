@@ -53,6 +53,12 @@
             window.open(shareURL, '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
         });
         $('.more_posts').click(function() {
+            var md = new MobileDetect(window.navigator.userAgent);
+            if (WCTPE.posts.max_num_pages == WCTPE.posts.current_page) {
+                $(this).text('The END! / 最後一頁');
+                $(this).unbind('click');
+                return;
+            }
             $("body").waitMe({
                 effect: "bounce",
                 text: "Loading...",
@@ -64,7 +70,6 @@
                 'current_page': WCTPE.posts.current_page,
                 'found_posts': WCTPE.posts.found_posts,
             };
-            var md = new MobileDetect(window.navigator.userAgent);
             if (md.is('iOS') && parseInt(md.version('iOS')) == 12) {
                 if (md.userAgent() == 'Chrome') {
                     location.href = '/page/' + (WCTPE.posts.current_page + 1) + '/';
@@ -74,10 +79,14 @@
                 if (res.success) {
                     $('.tattoo_posts_lists').append(res.data.data);
                     history.pushState(null, null, '/page/' + (WCTPE.posts.current_page + 1) + '/');
+                    WCTPE.posts.current_page += 1;
                 } else {
                     alert('Oops! Sorry error occurred!');
+                    location.reload();
                 }
                 $("body").waitMe('hide');
+            }).fail(function() {
+                alert('Oops! Sorry error occurred! Check internet.');
             });
         });
         $('.new_posts').click(function() {
