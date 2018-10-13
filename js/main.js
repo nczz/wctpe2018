@@ -8,7 +8,7 @@
         $("#submit_btn").click(function() {
             $("body").waitMe({
                 effect: "bounce",
-                text: "Uploading...(If you are using iOS 12 that you may stuck here. Refresh after 20s and do not resend again. Thank you. / 如果你使用 iOS 12 操作此功能而停在這個畫面，請於20秒左右重新整理並不要重新傳送表單，謝謝。)",
+                text: "Uploading...(If you are using iOS 12 and Chrome app that you may stuck here. Refresh after 20s and do not resend again. Thank you. / 如果你使用 iOS 12 且 Chrome App 操作此功能而停在這個畫面，請於20秒左右重新整理並不要重新傳送表單，謝謝。)",
             });
             // $('#wctpe2018_form').attr('target', 'wctpe_ios12_bug_fixed');
             // $('#wctpe2018_form').attr('action', location.href);
@@ -65,19 +65,18 @@
                 'found_posts': WCTPE.posts.found_posts,
             };
             var md = new MobileDetect(window.navigator.userAgent);
-            if (md.is('iPhone') && version('iPhone') > 11) {
-                $.post(WCTPE.ajaxurl, data, function(res) {
-                    if (res.success) {
-                        $('.tattoo_posts_lists').append(res.data.data);
-                        history.pushState(null, null, '/page/' + (WCTPE.posts.current_page + 1) + '/');
-                    } else {
-                        alert('Oops! Sorry error occurred!');
-                    }
-                    $("body").waitMe('hide');
-                });
-            } else {
+            if (md.is('iOS') && md.is('Chrome') && md.version('iOS') > 11) {
                 location.href = '/page/' + (WCTPE.posts.current_page + 1) + '/';
             }
+            $.post(WCTPE.ajaxurl, data, function(res) {
+                if (res.success) {
+                    $('.tattoo_posts_lists').append(res.data.data);
+                    history.pushState(null, null, '/page/' + (WCTPE.posts.current_page + 1) + '/');
+                } else {
+                    alert('Oops! Sorry error occurred!');
+                }
+                $("body").waitMe('hide');
+            });
         });
         $('.new_posts').click(function() {
             location.href = '/';
