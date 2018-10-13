@@ -70,12 +70,12 @@
                 'current_page': WCTPE.posts.current_page,
                 'found_posts': WCTPE.posts.found_posts,
             };
-            if (md.is('iOS') && parseInt(md.version('iOS')) == 12) {
-                if (md.userAgent() == 'Chrome') {
-                    location.href = '/page/' + (WCTPE.posts.current_page + 1) + '/';
-                    return;
-                }
-            }
+            // if (md.is('iOS') && parseInt(md.version('iOS')) == 12) {
+            //     if (md.userAgent() == 'Chrome') {
+            //         location.href = '/page/' + (WCTPE.posts.current_page + 1) + '/';
+            //         return;
+            //     }
+            // }
             $.post(WCTPE.ajaxurl, data, function(res) {
                 if (res.success) {
                     $('.tattoo_posts_lists').append(res.data.data);
