@@ -3,6 +3,7 @@ function custom_enqueue_styles() {
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('bootstrap-scripts', get_template_directory_uri() . '/js/bootstrap.min.js');
 	wp_enqueue_script('load-image', get_template_directory_uri() . '/js/load-image.all.min.js');
+	wp_enqueue_script('mobile-detect', get_template_directory_uri() . 'mobile-detect.min.js');
 	wp_enqueue_script('waitMe_js', get_template_directory_uri() . '/js/waitMe.min.js');
 	wp_enqueue_style('waitMe_css', get_template_directory_uri() . '/css/waitMe.min.css');
 	wp_enqueue_script('main', get_template_directory_uri() . '/js/main.js');
