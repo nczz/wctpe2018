@@ -218,9 +218,7 @@ function wctpe2018_display_shortcode($atts) {
 	$image_full = get_post_meta($id, 'wctp2018-post-image-full', true);
 	$image_large = get_post_meta($id, 'wctp2018-post-image-large', true);
 
-	$show_content .= '<div class="wctpe2018 posts row" id="post-' . esc_attr($id) . '">
-
-	<div class="col-md-5 m_b_20">';
+	$show_content = '<div class="wctpe2018 posts row" id="post-' . esc_attr($id) . '"><div class="col-md-5 m_b_20">';
 	if ($website != '') {
 		if (substr($website, 0, 4) != "http") {
 			$website = "http://" . $website;

@@ -53,6 +53,8 @@
             window.open(shareURL, '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
         });
         $('.more_posts').click(function() {
+            $(this).attr('disabled', true);
+            var that = $(this);
             var md = new MobileDetect(window.navigator.userAgent);
             if (WCTPE.posts.max_num_pages == WCTPE.posts.current_page) {
                 $(this).text('The END! / 最後一頁');
@@ -81,6 +83,7 @@
                     $('.tattoo_posts_lists').append(res.data.data);
                     history.pushState(null, null, '/page/' + (WCTPE.posts.current_page + 1) + '/');
                     WCTPE.posts.current_page += 1;
+                    that.attr('disabled', false);
                 } else {
                     alert('Oops! Sorry error occurred!');
                     location.reload();
