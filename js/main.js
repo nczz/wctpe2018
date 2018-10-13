@@ -2,6 +2,21 @@
     function draw(id, imgsrc) {
         $("#" + id).html('<img src=' + imgsrc + ' id="img-preview" height="200" alt="Image preview...">');
     }
+
+    function iOSversion() {
+        var d, v;
+        if (/iP(hone|od|ad)/.test(navigator.platform)) {
+            v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
+            d = {
+                status: true,
+                version: parseInt(v[1], 10),
+                info: parseInt(v[1], 10) + '.' + parseInt(v[2], 10) + '.' + parseInt(v[3] || 0, 10)
+            };
+        } else {
+            d = { status: false, version: false, info: '' }
+        }
+        return d;
+    }
     $(document).ready(function() {
         //For Submit
         $("#submit_btn").click(function() {
@@ -63,15 +78,19 @@
                 'current_page': WCTPE.posts.current_page,
                 'found_posts': WCTPE.posts.found_posts,
             };
-            $.post(WCTPE.ajaxurl, data, function(res) {
-                if (res.success) {
-                    $('.tattoo_posts_lists').append(res.data.data);
-                    history.pushState(null, null, '/page/' + (WCTPE.posts.current_page + 1) + '/');
-                } else {
-                    alert('Oops! Sorry error occurred!');
-                }
-                $("body").waitMe('hide');
-            });
+            if (iOSversion().version != false) {
+                $.post(WCTPE.ajaxurl, data, function(res) {
+                    if (res.success) {
+                        $('.tattoo_posts_lists').append(res.data.data);
+                        history.pushState(null, null, '/page/' + (WCTPE.posts.current_page + 1) + '/');
+                    } else {
+                        alert('Oops! Sorry error occurred!');
+                    }
+                    $("body").waitMe('hide');
+                });
+            } else {
+                alert(iOSversion().version);
+            }
         });
         $('.new_posts').click(function() {
             location.href = '/';

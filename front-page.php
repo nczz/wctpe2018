@@ -36,8 +36,8 @@ endwhile
 <?php else: ?>
 <p><?php echo 'Sorry, no posts here.'; ?></p>
 <?php endif;?>
-<?php if ($wp_query->max_num_pages > 1): ?>
 <a class=" new_posts" href="javascript://">Find News / 查看最新</a>
+<?php if ($wp_query->max_num_pages > 1 && $wp_query->max_num_pages == $paged): ?>
 <a class=" more_posts" href="javascript://">Load More / 載入更多</a>
 <?php endif;?>
 <a class="f_btn" href="/submit">這是什麼？ / What's this?</a>
