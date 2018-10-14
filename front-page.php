@@ -18,12 +18,12 @@ $jsparam = array('max_num_pages' => $wp_query->max_num_pages, 'found_posts' => $
 	// $email = get_post_meta(get_the_ID(), 'wctp2018-author-email', true);
 	// $website = get_post_meta(get_the_ID(), 'wctpe2018-author-website', true);
 	$name = get_post_meta(get_the_ID(), 'wctp2018-author-name', true);
-	$title = mb_substr(get_post_meta(get_the_ID(), 'wctp2018-post-title', true), 0, 20);
-	$content = get_post_meta(get_the_ID(), 'wctp2018-post-content', true);
+	$title = get_post_meta(get_the_ID(), 'wctp2018-post-title', true);
+	$content = mb_substr(get_post_meta(get_the_ID(), 'wctp2018-post-content', true), 0, 40) . "...";
 	// $image_full = get_post_meta(get_the_ID(), 'wctp2018-post-image-full', true);
 	$image_large = get_post_meta(get_the_ID(), 'wctp2018-post-image-large', true);
 
-	echo '<div class="col-md-3 m_b_20 post"><div class="box"><div class=" post_img"><a href="' . get_permalink($post->ID) . '"><img src="' . $image_large . '"/></a></div><a href="' . get_permalink($post->ID) . '" class="name"><h2 >' . $title . ' - ' . $name . '</h2></a></div></div>';
+	echo '<div class="col-md-3 m_b_20 post"><div class="box"><div class=" post_img"><a href="' . get_permalink($post->ID) . '"><img src="' . $image_large . '"/></a></div><a href="' . get_permalink($post->ID) . '" class="name"><h2 >' . $content . ' - ' . $name . '</h2></a></div></div>';
 endwhile
 ?>
 </div>

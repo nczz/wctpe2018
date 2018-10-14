@@ -253,10 +253,10 @@ function mxp_ajax_get_next_page_data() {
 	$str = '';
 	foreach ($ids as $key => $id) {
 		$name = get_post_meta($id, 'wctp2018-author-name', true);
-		$title = mb_substr(get_post_meta($id, 'wctp2018-post-title', true), 0, 20);
-		$content = get_post_meta($id, 'wctp2018-post-content', true);
+		//$title = mb_substr(get_post_meta($id, 'wctp2018-post-title', true), 0, 20);
+		$content = mb_substr(get_post_meta($id, 'wctp2018-post-content', true), 0, 40) . "...";
 		$image_large = get_post_meta($id, 'wctp2018-post-image-large', true);
-		$str .= '<div class="col-md-3 m_b_20 post"><div class="box"><div class=" post_img"><a href="' . get_permalink($id) . '"><img src="' . $image_large . '"/></a></div><a href="' . get_permalink($id) . '" class="name"><h2 >' . $title . ' - ' . $name . '</h2></a></div></div>';
+		$str .= '<div class="col-md-3 m_b_20 post"><div class="box"><div class=" post_img"><a href="' . get_permalink($id) . '"><img src="' . $image_large . '"/></a></div><a href="' . get_permalink($id) . '" class="name"><h2 >' . $content . ' - ' . $name . '</h2></a></div></div>';
 	}
 	wp_send_json_success(array('code' => 200, 'data' => $str));
 }
