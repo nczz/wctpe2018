@@ -277,3 +277,14 @@ max-width: 100%;
   opacity: 0.8;
 
 }
+
+@media (max-width:400px){
+.nav-menu{
+  padding-left:0px;
+
+}
+
+  .nav-menu li a{
+    font-size: 15px;
+  }
+}
