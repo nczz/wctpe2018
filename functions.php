@@ -94,7 +94,8 @@ function wctpe2018_form_shortcode($atts) {
 	$user_posttitle = isset($_COOKIE['user_posttitle']) ? $_COOKIE['user_posttitle'] : "";
 	$user_email = isset($_COOKIE['user_email']) ? $_COOKIE['user_email'] : "";
 
-	$content .= "<p class='text-center'>WordCamp Taipei 2018 帶給你什麼感覺呢？</p><p class='text-center'>想拿隱藏版 WAPUU 貼紙或是徵才或是與我們保持聯繫嗎？</p><p class='text-center'>大方的在下方表單留下你的大會活動的回憶吧！</p>";
+	$content .= "<p class='text-center'>WordCamp Taipei 2018 帶給你什麼感覺呢？</p><p class='text-center'>What do you think about WordCamp Taipei 2018?</p><p class='text-center'>想拿隱藏版 WAPUU 貼紙或是徵才或是與我們保持聯繫嗎？</p><p class='text-center'>You could share your experience at #WCTPE, introduce yourself, find partners, leave hiring information, anything you could think of!
+If you left a message on the board, you could get a hidden wapuu sticker at registration desk after 1 PM.</p><p class='text-center'>大方的在下方表單留下你的大會活動的回憶吧！</p>";
 	$content .= '<div class="' . esc_attr($class) . '" id="chun-' . esc_attr($id) . '">';
 	if ($title !== '') {
 		$content .= '<' . esc_attr($title_tag) . '>' . esc_html($title) . '</' . esc_attr($title_tag) . '>';
