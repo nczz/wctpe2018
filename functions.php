@@ -365,7 +365,7 @@ add_action('init', 'mxp_wctpe2018_form_processing');
 function wctpe2018_search_form($form) {
 	$form = '<div class="searchform find_post"><form role="search" method="get" id="searchform" class="searchform" action="' . home_url('/') . '" >
     <div><label class="screen-reader-text" for="s">' . __('Search for:') . '</label>
-    <input type="text" value="' . get_search_query() . '" name="s" id="s" />
+    <input type="text" value="' . get_search_query() . '" name="s" id="s" placeholder="Keywords / 關鍵字"/>
     <input type="submit" id="searchsubmit" value="' . esc_attr__('Search') . '" />
     </div>
     </form>';
