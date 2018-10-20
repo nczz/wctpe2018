@@ -94,7 +94,7 @@ function wctpe2018_form_shortcode($atts) {
 	$user_posttitle = isset($_COOKIE['user_posttitle']) ? $_COOKIE['user_posttitle'] : "";
 	$user_email = isset($_COOKIE['user_email']) ? $_COOKIE['user_email'] : "";
 
-	$content .= "<p class='text-center'>WordCamp Taipei 2018 帶給你什麼感覺呢？</p><p class='text-center'>What do you think about WordCamp Taipei 2018?</p><p class='text-center'>想拿隱藏版 WAPUU 貼紙或是徵才或是與我們保持聯繫嗎？</p><p class='text-center'>You could share your experience at #WCTPE, introduce yourself, find partners, leave hiring information, anything you could think of!</p><p class='text-center'>大方的在下方表單留下你的大會活動的回憶吧！</p><p class='text-center'>If you left a message on the board, you could get a hidden wapuu sticker at registration desk after 1 PM.</p>";
+	$content .= "<p class='text-center'>WordCamp Taipei 2018 帶給你什麼感覺呢？</p><p class='text-center'>想拿隱藏版 WAPUU 貼紙或是徵才或是與我們保持聯繫嗎？</p><p class='text-center'>大方的在下方表單留下你的大會活動的回憶吧！</p><p class='text-center'>What do you think about WordCamp Taipei 2018?</p><p class='text-center'>You could share your experience at #WCTPE, introduce yourself, find partners, leave hiring information, anything you could think of!</p><p class='text-center'>If you left a message on the board, you could get a hidden wapuu sticker at registration desk after 1 PM.</p>";
 	$content .= '<div class="' . esc_attr($class) . '" id="chun-' . esc_attr($id) . '">';
 	if ($title !== '') {
 		$content .= '<' . esc_attr($title_tag) . '>' . esc_html($title) . '</' . esc_attr($title_tag) . '>';
@@ -104,7 +104,7 @@ function wctpe2018_form_shortcode($atts) {
 	$content .= '<div class="qa-field"><span class="qa-desc">Email*</span><input type="text" id="qa-email" placeholder="Email / 信箱" value="' . $user_email . '" name="mxp-email"/></div>';
 	$content .= '<div class="qa-field"><span class="qa-desc">Website</span><input type="text" id="qa-website" placeholder="Website / 網站 http(s)://..." value="' . $user_website . '" name="mxp-website"/></div>';
 	$content .= '<div class="qa-field"><span class="qa-desc">Who are you? / 你是什麼人呢？*</span><input type="text" id="qa-title" placeholder="Tell us here! / 跟我們說吧！" value="' . $user_posttitle . '" name="mxp-title"/></div>';
-	$content .= '<div class="qa-field"><span class="qa-desc">What are you looking for? / 想說什麼呢？*</span><textarea id="qa-content" placeholder="Message / 內文" value="" name="mxp-content"></textarea></div>';
+	$content .= '<div class="qa-field"><span class="qa-desc">What do you want to share? / 想說什麼呢？*</span><textarea id="qa-content" placeholder="Message / 內文" value="" name="mxp-content"></textarea></div>';
 	$content .= '<div class="qa-field"><span class="qa-desc">Image*</span><input type="file" id="qa-image" accept="image/*"/></div>';
 	$content .= '<div class="qa-field"><input type="hidden" id="qa-image-proc"  value="" name="mxp-image"/></div>';
 	$content .= '<div class="qa-field "><input type="hidden" value="' . wp_create_nonce('mxp-wctpe2018form-nonce') . '" name="mxp-postkey"/></div>';
