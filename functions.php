@@ -31,7 +31,7 @@ function optimize_theme_setup() {
 	//移除css, js資源載入時的版本資訊
 	function remove_version_query($src) {
 		if (strpos($src, 'ver=')) {
-			$src .= "&t=" . time(); // remove_query_arg('ver', $src);
+			$src .= remove_query_arg('ver', $src);
 		}
 		return $src;
 	}
@@ -100,10 +100,10 @@ function wctpe2018_form_shortcode($atts) {
 		$content .= '<' . esc_attr($title_tag) . '>' . esc_html($title) . '</' . esc_attr($title_tag) . '>';
 	}
 	$content .= '<form method="POST" action="" id="wctpe2018_form">';
-	$content .= '<div class="qa-field"><span class="qa-desc">Name*</span><input type="text" id="qa-name" placeholder="Name / 稱呼" value="' . $user_name . '" name="mxp-name"/></div>';
-	$content .= '<div class="qa-field"><span class="qa-desc">Email*</span><input type="text" id="qa-email" placeholder="Email / 信箱" value="' . $user_email . '" name="mxp-email"/></div>';
-	$content .= '<div class="qa-field"><span class="qa-desc">Website</span><input type="text" id="qa-website" placeholder="Website / 網站 http(s)://..." value="' . $user_website . '" name="mxp-website"/></div>';
-	$content .= '<div class="qa-field"><span class="qa-desc">Who are you? / 你是什麼人呢？*</span><input type="text" id="qa-title" placeholder="Tell us here! / 跟我們說吧！" value="' . $user_posttitle . '" name="mxp-title"/></div>';
+	$content .= '<div class="qa-field"><span class="qa-desc">Name*</span><input type="text" id="qa-name" placeholder="Name / 稱呼" value="' . esc_attr($user_name) . '" name="mxp-name"/></div>';
+	$content .= '<div class="qa-field"><span class="qa-desc">Email*</span><input type="text" id="qa-email" placeholder="Email / 信箱" value="' . esc_attr($user_email) . '" name="mxp-email"/></div>';
+	$content .= '<div class="qa-field"><span class="qa-desc">Website</span><input type="text" id="qa-website" placeholder="Website / 網站 http(s)://..." value="' . esc_attr($user_website) . '" name="mxp-website"/></div>';
+	$content .= '<div class="qa-field"><span class="qa-desc">Who are you? / 你是什麼人呢？*</span><input type="text" id="qa-title" placeholder="Tell us here! / 跟我們說吧！" value="' . esc_attr($user_posttitle) . '" name="mxp-title"/></div>';
 	$content .= '<div class="qa-field"><span class="qa-desc">What do you want to share? / 想說什麼呢？*</span><textarea id="qa-content" placeholder="Message / 內文" value="" name="mxp-content"></textarea></div>';
 	$content .= '<div class="qa-field"><span class="qa-desc">Image*</span><input type="file" id="qa-image" accept="image/*"/></div>';
 	$content .= '<div class="qa-field"><input type="hidden" id="qa-image-proc"  value="" name="mxp-image"/></div>';
@@ -176,12 +176,12 @@ function insert_social_tags_in_head() {
 		$thumbnail_src = $thumbnail_src[0];
 	}
 	?>
-<meta property="og:title" content="<?php echo "{$title} - {$name}"; ?>" />
+<meta property="og:title" content="<?php echo esc_attr("{$title} - {$name}"); ?>" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="<?php echo get_permalink($post->ID); ?>" />
 <meta property="og:image" content="<?php echo esc_attr($thumbnail_src); ?>" />
 <meta property="og:site_name" content="<?php echo get_bloginfo('name'); ?>" />
-<meta property="og:description" content="<?php echo $content; ?>" />
+<meta property="og:description" content="<?php echo esc_attr($content); ?>" />
 <meta property="article:tag" content="WCTPE2018" />
 <meta property="article:tag" content="WordCamp Taipei 2018" />
 <meta property="article:publisher" content="https://www.facebook.com/WordCamp.Taipei/" />
@@ -190,8 +190,8 @@ function insert_social_tags_in_head() {
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@WordCampTaipei" />
 <meta name="twitter:domain" content="<?php echo get_bloginfo('url'); ?>" />
-<meta name="twitter:title" content="<?php echo "{$title} - {$name}"; ?>" />
-<meta name="twitter:description" content="<?php echo $content; ?>" />
+<meta name="twitter:title" content="<?php echo esc_attr("{$title} - {$name}"); ?>" />
+<meta name="twitter:description" content="<?php echo esc_attr($content); ?>" />
 <meta name="twitter:image" content="<?php echo esc_attr($thumbnail_src); ?>" />
 <meta itemprop="image" content="<?php echo esc_attr($thumbnail_src); ?>" />
 <script>
@@ -256,7 +256,7 @@ function mxp_ajax_get_next_page_data() {
 		//$title = mb_substr(get_post_meta($id, 'wctp2018-post-title', true), 0, 20);
 		$content = mb_substr(get_post_meta($id, 'wctp2018-post-content', true), 0, 40) . "...";
 		$image_large = get_post_meta($id, 'wctp2018-post-image-large', true);
-		$str .= '<div class="col-md-3 m_b_20 post"><div class="box"><div class=" post_img"><a href="' . get_permalink($id) . '"><img src="' . $image_large . '"/></a></div><a href="' . get_permalink($id) . '" class="name"><h2 >' . $content . ' - ' . $name . '</h2></a></div></div>';
+		$str .= '<div class="col-md-3 m_b_20 post"><div class="box"><div class=" post_img"><a href="' . get_permalink($id) . '"><img src="' . $image_large . '"/></a></div><a href="' . get_permalink($id) . '" class="name"><h2>' . esc_html($content . ' - ' . $name) . '</h2></a></div></div>';
 	}
 	wp_send_json_success(array('code' => 200, 'data' => $str));
 }
