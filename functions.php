@@ -31,7 +31,7 @@ function optimize_theme_setup() {
 	//移除css, js資源載入時的版本資訊
 	function remove_version_query($src) {
 		if (strpos($src, 'ver=')) {
-			$src .= remove_query_arg('ver', $src);
+			$src = remove_query_arg('ver', $src);
 		}
 		return $src;
 	}
